@@ -415,6 +415,17 @@
             background-color: #128C7E;
             color: white;
         }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-greeting {
+            margin-right: 15px;
+            font-weight: 600;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -444,7 +455,8 @@
                             <a class="nav-link" href="#testimonials">Testimoni</a>
                         </li>
                     </ul>
-                    <div class="d-flex">
+                    <div class="d-flex user-menu" id="userMenu">
+                        <!-- Default: Tombol Login/Daftar -->
                         <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                             <i class="fas fa-sign-in-alt me-1"></i> Login
                         </button>
@@ -590,7 +602,7 @@
                                     <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 30 hari</li>
                                     <li class="mb-2"><i class="fas fa-times text-muted me-2"></i> Support prioritas</li>
                                 </ul>
-                                <button class="btn btn-outline-primary w-100">Pilih Paket</button>
+                                <button class="btn btn-outline-primary w-100 btn-order" data-service="Paket Basic">Pilih Paket</button>
                             </div>
                         </div>
                     </div>
@@ -610,7 +622,7 @@
                                     <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 60 hari</li>
                                     <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support prioritas</li>
                                 </ul>
-                                <button class="btn btn-primary w-100">Pilih Paket</button>
+                                <button class="btn btn-primary w-100 btn-order" data-service="Paket Professional">Pilih Paket</button>
                             </div>
                         </div>
                     </div>
@@ -630,7 +642,7 @@
                                     <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 90 hari</li>
                                     <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support 24/7</li>
                                 </ul>
-                                <button class="btn btn-outline-primary w-100">Pilih Paket</button>
+                                <button class="btn btn-outline-primary w-100 btn-order" data-service="Paket Enterprise">Pilih Paket</button>
                             </div>
                         </div>
                     </div>
@@ -865,6 +877,9 @@
                                     <option value="Twitter Followers">Twitter Followers</option>
                                     <option value="Facebook Likes">Facebook Likes</option>
                                     <option value="Instagram Likes">Instagram Likes</option>
+                                    <option value="Paket Basic">Paket Basic</option>
+                                    <option value="Paket Professional">Paket Professional</option>
+                                    <option value="Paket Enterprise">Paket Enterprise</option>
                                 </select>
                             </div>
                         </div>
@@ -1385,7 +1400,10 @@
             { id: 3, name: "YouTube Subscribers", platform: "youtube", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
             { id: 4, name: "Twitter Followers", platform: "twitter", pricePer1000: 40000, description: "Tingkatkan followers akun Twitter Anda", status: "active" },
             { id: 5, name: "Facebook Likes", platform: "facebook", pricePer1000: 35000, description: "Tambah likes untuk halaman Facebook Anda", status: "active" },
-            { id: 6, name: "Instagram Likes", platform: "instagram", pricePer1000: 30000, description: "Tingkatkan engagement dengan likes Instagram", status: "active" }
+            { id: 6, name: "Instagram Likes", platform: "instagram", pricePer1000: 30000, description: "Tingkatkan engagement dengan likes Instagram", status: "active" },
+            { id: 7, name: "Paket Basic", platform: "paket", pricePer1000: 25000, description: "500 Followers - Untuk pemula", status: "active" },
+            { id: 8, name: "Paket Professional", platform: "paket", pricePer1000: 75000, description: "2.000 Followers - Paling populer", status: "active" },
+            { id: 9, name: "Paket Enterprise", platform: "paket", pricePer1000: 150000, description: "5.000 Followers - Untuk bisnis", status: "active" }
         ];
 
         const sampleTransactions = [
@@ -1436,8 +1454,8 @@
                 // Tampilkan notifikasi
                 showNotification(`Login berhasil! Selamat datang, ${user.name}.`, 'success');
                 
-                // Redirect ke admin panel
-                showAdminPanel(user);
+                // Update UI untuk user yang login
+                updateUIForLoggedInUser(user);
                 
                 return true;
             } else {
@@ -1475,15 +1493,44 @@
             // Tampilkan notifikasi
             showNotification('Registrasi berhasil! Selamat datang.', 'success');
             
-            // Redirect ke admin panel
-            showAdminPanel(newUser);
+            // Update UI untuk user yang login
+            updateUIForLoggedInUser(newUser);
             
             return true;
         }
 
-        // Fungsi untuk menampilkan admin panel
-        function showAdminPanel(user) {
+        // Fungsi untuk update UI setelah login
+        function updateUIForLoggedInUser(user) {
+            const userMenu = document.getElementById('userMenu');
+            userMenu.innerHTML = `
+                <span class="user-greeting">Halo, ${user.name}</span>
+                <button class="btn btn-outline-primary me-2" id="userDashboardBtn">
+                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                </button>
+                <button class="btn btn-outline-danger" id="logoutUserBtn">
+                    <i class="fas fa-sign-out-alt me-1"></i> Logout
+                </button>
+            `;
+            
+            // Event listener untuk tombol dashboard user
+            document.getElementById('userDashboardBtn').addEventListener('click', function() {
+                showUserDashboard(user);
+            });
+            
+            // Event listener untuk tombol logout user
+            document.getElementById('logoutUserBtn').addEventListener('click', function() {
+                logoutUser();
+            });
+        }
+
+        // Fungsi untuk menampilkan dashboard user (bukan admin)
+        function showUserDashboard(user) {
+            // Sembunyikan konten utama
             document.getElementById('mainContent').style.display = 'none';
+            
+            // Tampilkan panel user (bukan admin panel)
+            // Di sini kita bisa membuat panel khusus untuk user biasa
+            // Untuk sekarang, kita akan menggunakan admin panel dengan batasan akses
             document.getElementById('adminPanel').style.display = 'block';
             
             // Update info user di header
@@ -1491,15 +1538,92 @@
             document.getElementById('userRole').textContent = user.role;
             document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
             
-            // Load data dashboard
-            loadDashboardData();
+            // Sembunyikan menu admin jika user bukan admin
+            if (user.role !== 'Administrator') {
+                document.querySelector('.sidebar').innerHTML = `
+                    <h4 class="text-center mb-4">Dashboard Saya</h4>
+                    <a href="#" class="active" data-section="userOrders"><i class="fas fa-shopping-cart me-2"></i> Pesanan Saya</a>
+                    <a href="#" data-section="userProfile"><i class="fas fa-user me-2"></i> Profil Saya</a>
+                    <a href="#" id="backToMain"><i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda</a>
+                `;
+                
+                // Setup navigasi untuk user biasa
+                setupUserNavigation();
+            } else {
+                // Load data dashboard admin
+                loadDashboardData();
+            }
         }
 
-        // Fungsi untuk logout
+        // Fungsi untuk setup navigasi user biasa
+        function setupUserNavigation() {
+            const navLinks = document.querySelectorAll('.sidebar a[data-section]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hapus class active dari semua link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Tambah class active ke link yang diklik
+                    this.classList.add('active');
+                    
+                    // Sembunyikan semua section
+                    const sections = document.querySelectorAll('.admin-section');
+                    sections.forEach(section => section.classList.add('d-none'));
+                    
+                    // Tampilkan section yang dipilih
+                    const sectionId = this.getAttribute('data-section') + 'Section';
+                    document.getElementById(sectionId).classList.remove('d-none');
+                });
+            });
+            
+            // Event listener untuk tombol kembali ke beranda
+            document.getElementById('backToMain').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('adminPanel').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            });
+        }
+
+        // Fungsi untuk logout user biasa
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Reset UI ke state sebelum login
+            const userMenu = document.getElementById('userMenu');
+            userMenu.innerHTML = `
+                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <i class="fas fa-user-plus me-1"></i> Daftar
+                </button>
+            `;
+            
+            showNotification('Anda telah logout.', 'info');
+        }
+
+        // Fungsi untuk logout admin
         function logout() {
             localStorage.removeItem('currentUser');
             document.getElementById('adminPanel').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
+            
+            // Reset UI ke state sebelum login
+            const userMenu = document.getElementById('userMenu');
+            userMenu.innerHTML = `
+                <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fas fa-sign-in-alt me-1"></i> Login
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <i class="fas fa-user-plus me-1"></i> Daftar
+                </button>
+            `;
+            
             showNotification('Anda telah logout.', 'info');
         }
 
@@ -1655,6 +1779,18 @@
             // Event listener untuk tombol pesan
             document.querySelectorAll('.btn-order').forEach(button => {
                 button.addEventListener('click', function() {
+                    // Cek apakah user sudah login
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    
+                    if (!currentUser) {
+                        // Jika belum login, tampilkan modal login
+                        showNotification('Silakan login terlebih dahulu untuk memesan.', 'warning');
+                        const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+                        loginModal.show();
+                        return;
+                    }
+                    
+                    // Jika sudah login, lanjutkan dengan pesanan
                     const service = this.getAttribute('data-service');
                     currentOrder.service = service;
                     
@@ -1711,9 +1847,10 @@
             // Event listener untuk tombol konfirmasi pembayaran
             document.getElementById('confirmPayment').addEventListener('click', function() {
                 // Simulasi pembuatan transaksi
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 const newTransaction = {
                     id: 'TRX' + (sampleTransactions.length + 1).toString().padStart(3, '0'),
-                    user: JSON.parse(localStorage.getItem('currentUser')).name,
+                    user: currentUser.name,
                     service: currentOrder.service,
                     quantity: currentOrder.quantity,
                     amount: currentOrder.price,
@@ -1773,7 +1910,7 @@ Berikut adalah bukti transfernya:`;
             // Cek apakah user sudah login
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
-                showAdminPanel(currentUser);
+                updateUIForLoggedInUser(currentUser);
             }
             
             // Setup form login
@@ -1811,7 +1948,7 @@ Berikut adalah bukti transfernya:`;
                 }
             });
             
-            // Setup logout button
+            // Setup logout button untuk admin
             document.getElementById('logoutBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 logout();
