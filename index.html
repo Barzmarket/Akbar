@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameTopUp - Top Up Game Online</title>
+    <title>FollowBoost - Tambah Followers & Likes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff6b6b;
             --light: #f8f9fa;
             --dark: #212529;
+            --success: #4cc9f0;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f7fb;
             color: var(--dark);
+            transition: all 0.3s;
         }
         
         .navbar-brand {
@@ -33,19 +35,20 @@
             border-radius: 0 0 30px 30px;
         }
         
-        .game-card {
+        .service-card {
             border: none;
             border-radius: 15px;
             transition: transform 0.3s, box-shadow 0.3s;
             margin-bottom: 20px;
+            overflow: hidden;
         }
         
-        .game-card:hover {
+        .service-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
-        .game-icon {
+        .service-icon {
             width: 60px;
             height: 60px;
             border-radius: 12px;
@@ -58,7 +61,7 @@
         }
         
         .btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             border: none;
             border-radius: 8px;
             padding: 10px 20px;
@@ -66,7 +69,7 @@
         }
         
         .btn-primary:hover {
-            background-color: var(--secondary);
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
         }
         
         .section-title {
@@ -115,7 +118,9 @@
             color: white;
         }
         
+        /* Admin Panel Styles */
         .admin-panel {
+            display: none;
             min-height: 100vh;
             background-color: #f8f9fa;
         }
@@ -125,6 +130,9 @@
             color: white;
             min-height: 100vh;
             padding-top: 20px;
+            position: fixed;
+            width: 250px;
+            z-index: 100;
         }
         
         .sidebar a {
@@ -143,7 +151,9 @@
         }
         
         .admin-content {
+            margin-left: 250px;
             padding: 20px;
+            width: calc(100% - 250px);
         }
         
         .table-responsive {
@@ -159,557 +169,1202 @@
             padding: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
         }
         
         .stats-card i {
             font-size: 30px;
             color: var(--primary);
         }
+        
+        .admin-header {
+            background-color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        
+        .transaction-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .dashboard-section {
+            margin-bottom: 30px;
+        }
+        
+        .chart-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chart-placeholder {
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        .chart-placeholder i {
+            font-size: 50px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #e63946;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        .service-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .pricing-card {
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .pricing-card:hover {
+            border-color: var(--primary);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .instagram-bg {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+        
+        .tiktok-bg {
+            background-color: #000000;
+        }
+        
+        .youtube-bg {
+            background-color: #FF0000;
+        }
+        
+        .twitter-bg {
+            background-color: #1DA1F2;
+        }
+        
+        .facebook-bg {
+            background-color: #1877F2;
+        }
+        
+        .whatsapp-bg {
+            background-color: #25D366;
+        }
+        
+        .dana-bg {
+            background-color: #118EEA;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                min-height: auto;
+            }
+            
+            .admin-content {
+                margin-left: 0;
+                width: 100%;
+            }
+            
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+        }
+        
+        .progress {
+            height: 10px;
+            margin-top: 10px;
+        }
+        
+        .order-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .order-summary {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .whatsapp-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+        }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-gamepad me-2"></i>GameTopUp
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#games">Game</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#cara-beli">Cara Beli</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#testimoni">Testimoni</a>
-                    </li>
-                </ul>
-                <div class="d-flex">
-                    <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
-                        <i class="fas fa-sign-in-alt me-1"></i> Login
-                    </button>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-                        <i class="fas fa-user-plus me-1"></i> Daftar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="container text-center">
-            <h1 class="display-4 fw-bold mb-4">Top Up Game Mudah & Cepat</h1>
-            <p class="lead mb-4">Isi diamond, koin, atau item game favorit Anda dengan proses instan dan harga terbaik.</p>
-            <button class="btn btn-light btn-lg">Beli Sekarang</button>
-        </div>
-    </section>
-
-    <!-- Games Section -->
-    <section id="games" class="py-5">
-        <div class="container">
-            <h2 class="section-title">Pilih Game Favorit Anda</h2>
-            <div class="row">
-                <!-- Game Cards -->
-                <div class="col-md-4">
-                    <div class="game-card card h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="game-icon bg-danger mx-auto">
-                                <i class="fab fa-android"></i>
-                            </div>
-                            <h5 class="card-title">Mobile Legends</h5>
-                            <p class="card-text text-muted">Top up Diamond ML dengan harga terjangkau.</p>
-                            <div class="d-grid">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">Pilih Produk</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="game-card card h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="game-icon bg-success mx-auto">
-                                <i class="fas fa-ghost"></i>
-                            </div>
-                            <h5 class="card-title">Genshin Impact</h5>
-                            <p class="card-text text-muted">Top up Genesis Crystal untuk karakter dan senjata.</p>
-                            <div class="d-grid">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">Pilih Produk</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-md-4">
-                    <div class="game-card card h-100">
-                        <div class="card-body text-center p-4">
-                            <div class="game-icon bg-warning mx-auto">
-                                <i class="fas fa-fire"></i>
-                            </div>
-                            <h5 class="card-title">Free Fire</h5>
-                            <p class="card-text text-muted">Top up Diamond FF untuk skin dan item eksklusif.</p>
-                            <div class="d-grid">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal">Pilih Produk</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-4">
-                <a href="#" class="btn btn-outline-primary">Lihat Semua Game</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Payment Methods -->
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">Metode Pembayaran</h2>
-            <div class="row">
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg" alt="DANA">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Logo_ovo_purple.svg" alt="OVO">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Gopay_logo.svg" alt="Gopay">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Bank_Central_Asia.svg" alt="BCA">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Mandiri_logo_2016.svg" alt="Mandiri">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="payment-method">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Logo_BNI_46.svg" alt="BNI">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How to Buy -->
-    <section id="cara-beli" class="py-5">
-        <div class="container">
-            <h2 class="section-title text-center">Cara Membeli</h2>
-            <div class="row">
-                <div class="col-md-3 text-center mb-4">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <span class="h3">1</span>
-                    </div>
-                    <h5>Pilih Game & Produk</h5>
-                    <p class="text-muted">Pilih game dan nominal top up yang diinginkan.</p>
-                </div>
-                <div class="col-md-3 text-center mb-4">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <span class="h3">2</span>
-                    </div>
-                    <h5>Masukkan ID Game</h5>
-                    <p class="text-muted">Masukkan ID game dan server yang benar.</p>
-                </div>
-                <div class="col-md-3 text-center mb-4">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <span class="h3">3</span>
-                    </div>
-                    <h5>Bayar</h5>
-                    <p class="text-muted">Pilih metode pembayaran dan selesaikan transaksi.</p>
-                </div>
-                <div class="col-md-3 text-center mb-4">
-                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                        <span class="h3">4</span>
-                    </div>
-                    <h5>Selesai</h5>
-                    <p class="text-muted">Item akan dikirim secara otomatis ke akun game Anda.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimoni" class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title text-center">Testimoni Pelanggan</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="https://randomuser.me/api/portraits/men/32.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                <div>
-                                    <h6 class="mb-0">Ahmad Rizki</h6>
-                                    <small class="text-muted">Mobile Legends Player</small>
-                                </div>
-                            </div>
-                            <p class="card-text">"Proses top up cepat banget, ga sampai 5 menit diamond udah masuk. Recommended banget!"</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="https://randomuser.me/api/portraits/women/44.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                <div>
-                                    <h6 class="mb-0">Sari Dewi</h6>
-                                    <small class="text-muted">Genshin Impact Player</small>
-                                </div>
-                            </div>
-                            <p class="card-text">"Harganya lebih murah dari tempat lain, dan CS-nya ramah banget. Bakal langganan disini!"</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-3">
-                                <img src="https://randomuser.me/api/portraits/men/76.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                <div>
-                                    <h6 class="mb-0">Budi Santoso</h6>
-                                    <small class="text-muted">Free Fire Player</small>
-                                </div>
-                            </div>
-                            <p class="card-text">"Pelayanan 24 jam, kapan aja butuh top up bisa langsung diproses. Mantap pokoknya!"</p>
-                            <div class="text-warning">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5 class="mb-3"><i class="fas fa-gamepad me-2"></i>GameTopUp</h5>
-                    <p>Toko top up game online terpercaya dengan proses cepat dan harga terjangkau.</p>
+    <!-- Main Content (Public Website) -->
+    <div class="main-content" id="mainContent">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <i class="fas fa-rocket me-2"></i>FollowBoost
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#services">Layanan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#pricing">Harga</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#testimonials">Testimoni</a>
+                        </li>
+                    </ul>
                     <div class="d-flex">
-                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                        <button class="btn btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            <i class="fas fa-sign-in-alt me-1"></i> Login
+                        </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            <i class="fas fa-user-plus me-1"></i> Daftar
+                        </button>
                     </div>
                 </div>
-                <div class="col-md-2 mb-4">
-                    <h5 class="mb-3">Tautan Cepat</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50 text-decoration-none">Beranda</a></li>
-                        <li><a href="#games" class="text-white-50 text-decoration-none">Game</a></li>
-                        <li><a href="#cara-beli" class="text-white-50 text-decoration-none">Cara Beli</a></li>
-                        <li><a href="#testimoni" class="text-white-50 text-decoration-none">Testimoni</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <h5 class="mb-3">Bantuan</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Syarat & Ketentuan</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Kebijakan Privasi</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Hubungi Kami</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <h5 class="mb-3">Kontak</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> cs@gametopup.com</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +62 812-3456-7890</li>
-                        <li class="mb-2"><i class="fab fa-whatsapp me-2"></i> +62 812-3456-7890</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Jakarta, Indonesia</li>
-                    </ul>
-                </div>
             </div>
-            <hr class="my-4">
-            <div class="text-center">
-                <p class="mb-0">&copy; 2023 GameTopUp. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </nav>
 
-    <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content login-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title">Login ke Akun Anda</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form>
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="loginEmail" placeholder="nama@contoh.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" placeholder="Masukkan password">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="rememberMe">
-                            <label class="form-check-label" for="rememberMe">Ingat saya</label>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </form>
-                    <div class="text-center mt-3">
-                        <a href="#" class="text-decoration-none">Lupa password?</a>
-                    </div>
-                    <hr>
-                    <div class="text-center">
-                        <p class="mb-0">Belum punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal" class="text-decoration-none">Daftar di sini</a></p>
-                    </div>
-                </div>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container text-center">
+                <h1 class="display-4 fw-bold mb-4">Tambah Followers & Likes Media Sosial</h1>
+                <p class="lead mb-4">Tingkatkan popularitas akun media sosial Anda dengan followers, likes, dan views berkualitas.</p>
+                <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#registerModal">Mulai Sekarang</button>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content register-modal">
-                <div class="modal-header">
-                    <h5 class="modal-title">Buat Akun Baru</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form>
-                        <div class="mb-3">
-                            <label for="registerName" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="registerName" placeholder="Masukkan nama lengkap">
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="registerEmail" placeholder="nama@contoh.com">
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPhone" class="form-label">Nomor Telepon</label>
-                            <input type="tel" class="form-control" id="registerPhone" placeholder="08xxxxxxxxxx">
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" placeholder="Minimal 8 karakter">
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerConfirmPassword" class="form-label">Konfirmasi Password</label>
-                            <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Ulangi password">
-                        </div>
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="agreeTerms">
-                            <label class="form-check-label" for="agreeTerms">Saya setuju dengan <a href="#" class="text-decoration-none">Syarat & Ketentuan</a></label>
-                        </div>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary">Daftar</button>
-                        </div>
-                    </form>
-                    <hr>
-                    <div class="text-center">
-                        <p class="mb-0">Sudah punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal" class="text-decoration-none">Login di sini</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Product Selection Modal -->
-    <div class="modal fade" id="productModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Pilih Nominal Top Up</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">86 Diamond</h5>
-                                    <p class="card-text text-muted">Rp 25.000</p>
-                                    <button class="btn btn-outline-primary">Pilih</button>
+        <!-- Services Section -->
+        <section id="services" class="py-5">
+            <div class="container">
+                <h2 class="section-title text-center">Layanan Kami</h2>
+                <div class="row">
+                    <!-- Instagram Followers -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100 position-relative">
+                            <span class="service-badge bg-success">Populer</span>
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon instagram-bg mx-auto">
+                                    <i class="fab fa-instagram"></i>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">172 Diamond</h5>
-                                    <p class="card-text text-muted">Rp 50.000</p>
-                                    <button class="btn btn-outline-primary">Pilih</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">257 Diamond</h5>
-                                    <p class="card-text text-muted">Rp 75.000</p>
-                                    <button class="btn btn-outline-primary">Pilih</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">344 Diamond</h5>
-                                    <p class="card-text text-muted">Rp 100.000</p>
-                                    <button class="btn btn-outline-primary">Pilih</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Admin Panel (akan ditampilkan setelah login admin) -->
-    <div class="admin-panel d-none">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2 sidebar">
-                    <h4 class="text-center mb-4">Admin Panel</h4>
-                    <a href="#" class="active"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
-                    <a href="#"><i class="fas fa-shopping-cart me-2"></i> Transaksi</a>
-                    <a href="#"><i class="fas fa-gamepad me-2"></i> Produk</a>
-                    <a href="#"><i class="fas fa-users me-2"></i> Pengguna</a>
-                    <a href="#"><i class="fas fa-cog me-2"></i> Pengaturan</a>
-                    <a href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
-                </div>
-                <div class="col-md-10 admin-content">
-                    <h3 class="mb-4">Dashboard Admin</h3>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4>156</h4>
-                                        <p class="text-muted">Total Transaksi</p>
-                                    </div>
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4>Rp 12.5 Jt</h4>
-                                        <p class="text-muted">Pendapatan</p>
-                                    </div>
-                                    <i class="fas fa-dollar-sign"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4>89</h4>
-                                        <p class="text-muted">Pengguna</p>
-                                    </div>
-                                    <i class="fas fa-users"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-card">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <h4>15</h4>
-                                        <p class="text-muted">Produk</p>
-                                    </div>
-                                    <i class="fas fa-gamepad"></i>
+                                <h5 class="card-title">Instagram Followers</h5>
+                                <p class="card-text text-muted">Tambah followers Instagram dengan cepat dan aman.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="Instagram Followers">Pesan Sekarang</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="mt-4">
-                        <h5 class="mb-3">Transaksi Terbaru</h5>
-                        <div class="table-responsive">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>ID Transaksi</th>
-                                        <th>Pengguna</th>
-                                        <th>Produk</th>
-                                        <th>Tanggal</th>
-                                        <th>Status</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#TRX001</td>
-                                        <td>Ahmad Rizki</td>
-                                        <td>Mobile Legends - 172 Diamond</td>
-                                        <td>12 Nov 2023</td>
-                                        <td><span class="badge bg-success">Selesai</span></td>
-                                        <td><button class="btn btn-sm btn-primary">Detail</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>#TRX002</td>
-                                        <td>Sari Dewi</td>
-                                        <td>Genshin Impact - 330 Genesis</td>
-                                        <td>11 Nov 2023</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                        <td><button class="btn btn-sm btn-primary">Detail</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>#TRX003</td>
-                                        <td>Budi Santoso</td>
-                                        <td>Free Fire - 520 Diamond</td>
-                                        <td>10 Nov 2023</td>
-                                        <td><span class="badge bg-success">Selesai</span></td>
-                                        <td><button class="btn btn-sm btn-primary">Detail</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <!-- TikTok Followers -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100">
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon tiktok-bg mx-auto">
+                                    <i class="fab fa-tiktok"></i>
+                                </div>
+                                <h5 class="card-title">TikTok Followers</h5>
+                                <p class="card-text text-muted">Tingkatkan followers TikTok Anda dengan mudah.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="TikTok Followers">Pesan Sekarang</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
+                    <!-- YouTube Subscribers -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100">
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon youtube-bg mx-auto">
+                                    <i class="fab fa-youtube"></i>
+                                </div>
+                                <h5 class="card-title">YouTube Subscribers</h5>
+                                <p class="card-text text-muted">Tambah subscribers YouTube channel Anda.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="YouTube Subscribers">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Twitter Followers -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100">
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon twitter-bg mx-auto">
+                                    <i class="fab fa-twitter"></i>
+                                </div>
+                                <h5 class="card-title">Twitter Followers</h5>
+                                <p class="card-text text-muted">Tingkatkan followers akun Twitter Anda.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="Twitter Followers">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Facebook Likes -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100">
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon facebook-bg mx-auto">
+                                    <i class="fab fa-facebook"></i>
+                                </div>
+                                <h5 class="card-title">Facebook Likes</h5>
+                                <p class="card-text text-muted">Tambah likes untuk halaman Facebook Anda.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="Facebook Likes">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Instagram Likes -->
+                    <div class="col-md-4 mb-4">
+                        <div class="service-card card h-100">
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon instagram-bg mx-auto">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h5 class="card-title">Instagram Likes</h5>
+                                <p class="card-text text-muted">Tingkatkan engagement dengan likes Instagram.</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="Instagram Likes">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Paket Harga</h2>
+                <div class="row justify-content-center">
+                    <!-- Paket Basic -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card pricing-card h-100 text-center">
+                            <div class="card-header py-4 bg-white">
+                                <h5 class="card-title">Basic</h5>
+                                <div class="price display-4 fw-bold">Rp 25.000</div>
+                                <p class="text-muted">Untuk pemula</p>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 500 Followers</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai dalam 1 jam</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 30 hari</li>
+                                    <li class="mb-2"><i class="fas fa-times text-muted me-2"></i> Support prioritas</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100">Pilih Paket</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Paket Professional -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card pricing-card featured h-100 text-center">
+                            <div class="card-header py-4 bg-primary text-white">
+                                <h5 class="card-title">Professional</h5>
+                                <div class="price display-4 fw-bold">Rp 75.000</div>
+                                <p>Paling populer</p>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 2.000 Followers</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai dalam 30 menit</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 60 hari</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support prioritas</li>
+                                </ul>
+                                <button class="btn btn-primary w-100">Pilih Paket</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Paket Enterprise -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card pricing-card h-100 text-center">
+                            <div class="card-header py-4 bg-white">
+                                <h5 class="card-title">Enterprise</h5>
+                                <div class="price display-4 fw-bold">Rp 150.000</div>
+                                <p class="text-muted">Untuk bisnis</p>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-unstyled mb-4">
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 5.000 Followers</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai segera</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 90 hari</li>
+                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support 24/7</li>
+                                </ul>
+                                <button class="btn btn-outline-primary w-100">Pilih Paket</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="py-5">
+            <div class="container">
+                <h2 class="section-title text-center">Testimoni Pelanggan</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                    <div>
+                                        <h6 class="mb-0">Sari Dewi</h6>
+                                        <small class="text-muted">Influencer</small>
+                                    </div>
+                                </div>
+                                <p class="card-text">"Followers Instagram saya naik 2000 dalam waktu 2 hari. Pelayanan cepat dan hasilnya memuaskan!"</p>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/men/44.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                    <div>
+                                        <h6 class="mb-0">Ahmad Rizki</h6>
+                                        <small class="text-muted">Content Creator</small>
+                                    </div>
+                                </div>
+                                <p class="card-text">"Saya pesan followers untuk TikTok, hasilnya sesuai dan prosesnya cepat. Recommended banget!"</p>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <img src="https://randomuser.me/api/portraits/women/65.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
+                                    <div>
+                                        <h6 class="mb-0">Diana Putri</h6>
+                                        <small class="text-muted">Bisnis Online</small>
+                                    </div>
+                                </div>
+                                <p class="card-text">"Sejak menggunakan jasa FollowBoost, engagement di akun bisnis saya meningkat signifikan."</p>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <h5 class="mb-3"><i class="fas fa-rocket me-2"></i>FollowBoost</h5>
+                        <p>Tingkatkan popularitas media sosial Anda dengan followers, likes, dan views berkualitas.</p>
+                        <div class="d-flex">
+                            <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-white me-3"><i class="fab fa-tiktok"></i></a>
+                            <a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a>
+                            <a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-2 mb-4">
+                        <h5 class="mb-3">Tautan Cepat</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white-50 text-decoration-none">Beranda</a></li>
+                            <li><a href="#services" class="text-white-50 text-decoration-none">Layanan</a></li>
+                            <li><a href="#pricing" class="text-white-50 text-decoration-none">Harga</a></li>
+                            <li><a href="#testimonials" class="text-white-50 text-decoration-none">Testimoni</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <h5 class="mb-3">Bantuan</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none">Syarat & Ketentuan</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none">Kebijakan Privasi</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none">Hubungi Kami</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <h5 class="mb-3">Kontak</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="fas fa-envelope me-2"></i> cs@followboost.com</li>
+                            <li class="mb-2"><i class="fas fa-phone me-2"></i> +62 812-3456-7890</li>
+                            <li class="mb-2"><i class="fab fa-whatsapp me-2"></i> +62 812-3456-7890</li>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> Jakarta, Indonesia</li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="text-center">
+                    <p class="mb-0">&copy; 2023 FollowBoost. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Login Modal -->
+        <div class="modal fade" id="loginModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content login-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login ke Akun Anda</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="nama@contoh.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Masukkan password" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Ingat saya</label>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Login</button>
+                            </div>
+                        </form>
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-decoration-none">Lupa password?</a>
+                        </div>
+                        <hr>
+                        <div class="text-center">
+                            <p class="mb-0">Belum punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal" class="text-decoration-none">Daftar di sini</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Register Modal -->
+        <div class="modal fade" id="registerModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content register-modal">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Buat Akun Baru</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form id="registerForm">
+                            <div class="mb-3">
+                                <label for="registerName" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="registerName" placeholder="Masukkan nama lengkap" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="registerEmail" placeholder="nama@contoh.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPhone" class="form-label">Nomor Telepon</label>
+                                <input type="tel" class="form-control" id="registerPhone" placeholder="08xxxxxxxxxx" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="registerPassword" placeholder="Minimal 8 karakter" required minlength="8">
+                            </div>
+                            <div class="mb-3">
+                                <label for="registerConfirmPassword" class="form-label">Konfirmasi Password</label>
+                                <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Ulangi password" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">Saya setuju dengan <a href="#" class="text-decoration-none">Syarat & Ketentuan</a></label>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Daftar</button>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="text-center">
+                            <p class="mb-0">Sudah punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal" class="text-decoration-none">Login di sini</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Modal -->
+        <div class="modal fade" id="orderModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pesan Layanan</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="order-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h6>Pilih Layanan</h6>
+                                <select class="form-select" id="serviceSelect">
+                                    <option value="">Pilih layanan...</option>
+                                    <option value="Instagram Followers">Instagram Followers</option>
+                                    <option value="TikTok Followers">TikTok Followers</option>
+                                    <option value="YouTube Subscribers">YouTube Subscribers</option>
+                                    <option value="Twitter Followers">Twitter Followers</option>
+                                    <option value="Facebook Likes">Facebook Likes</option>
+                                    <option value="Instagram Likes">Instagram Likes</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="order-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h6>Jumlah</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control" id="quantityInput" placeholder="Jumlah" min="100" max="10000" value="1000">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Rp</span>
+                                            <input type="text" class="form-control" id="priceDisplay" value="50.000" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <small class="text-muted">Minimal 100, Maksimal 10.000</small>
+                            </div>
+                        </div>
+                        
+                        <div class="order-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h6>Informasi Akun</h6>
+                                <div class="mb-3">
+                                    <label class="form-label">Username/URL Akun</label>
+                                    <input type="text" class="form-control" id="accountInfo" placeholder="Contoh: @username atau https://instagram.com/username">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Catatan (Opsional)</label>
+                                    <textarea class="form-control" id="orderNotes" rows="2" placeholder="Catatan khusus untuk pesanan"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="order-summary">
+                            <h6>Ringkasan Pesanan</h6>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Layanan:</span>
+                                <span id="summaryService">-</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Jumlah:</span>
+                                <span id="summaryQuantity">-</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Harga:</span>
+                                <span id="summaryPrice">-</span>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between fw-bold">
+                                <span>Total:</span>
+                                <span id="summaryTotal">-</span>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100" id="proceedPayment">Lanjutkan ke Pembayaran</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modal -->
+        <div class="modal fade" id="paymentModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Pembayaran via DANA</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="text-center mb-4">
+                            <div class="social-icon dana-bg mx-auto mb-3">
+                                <i class="fas fa-wallet"></i>
+                            </div>
+                            <h5>Transfer ke DANA</h5>
+                            <p class="text-muted">Lakukan transfer sesuai dengan jumlah pembayaran</p>
+                        </div>
+                        
+                        <div class="order-summary mb-4">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total Pembayaran:</span>
+                                <span class="fw-bold" id="paymentTotal">Rp 50.000</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Nomor DANA:</span>
+                                <span class="fw-bold">0812-3456-7890</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Atas Nama:</span>
+                                <span class="fw-bold">FOLLOWBOOST</span>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <small>
+                                <i class="fas fa-info-circle me-2"></i>
+                                Setelah melakukan pembayaran, klik tombol konfirmasi di bawah untuk mengirim bukti transfer ke WhatsApp kami.
+                            </small>
+                        </div>
+                        
+                        <button class="btn whatsapp-btn" id="confirmPayment">
+                            <i class="fab fa-whatsapp"></i> Konfirmasi Pembayaran via WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="sidebar">
+            <h4 class="text-center mb-4">Admin Panel</h4>
+            <a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a>
+            <a href="#" data-section="transactions"><i class="fas fa-shopping-cart me-2"></i> Transaksi</a>
+            <a href="#" data-section="services"><i class="fas fa-cog me-2"></i> Layanan</a>
+            <a href="#" data-section="users"><i class="fas fa-users me-2"></i> Pengguna</a>
+            <a href="#" data-section="settings"><i class="fas fa-cog me-2"></i> Pengaturan</a>
+            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a>
+        </div>
+        <div class="admin-content">
+            <!-- Dashboard Section -->
+            <div class="admin-section" id="dashboardSection">
+                <div class="admin-header">
+                    <h3 class="mb-0">Dashboard Admin</h3>
+                    <div class="user-info">
+                        <div class="user-avatar" id="userAvatar">A</div>
+                        <div>
+                            <div class="fw-bold" id="userName">Admin User</div>
+                            <small class="text-muted" id="userRole">Administrator</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 id="totalTransactions">156</h4>
+                                    <p class="text-muted">Total Transaksi</p>
+                                </div>
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 id="totalRevenue">Rp 12.5 Jt</h4>
+                                    <p class="text-muted">Pendapatan</p>
+                                </div>
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 id="totalUsers">89</h4>
+                                    <p class="text-muted">Pengguna</p>
+                                </div>
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4 id="totalServices">6</h4>
+                                    <p class="text-muted">Layanan</p>
+                                </div>
+                                <i class="fas fa-cog"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i>
+                                <h5>Grafik Pendapatan Bulanan</h5>
+                                <p>Visualisasi data pendapatan akan ditampilkan di sini</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-pie"></i>
+                                <h5>Distribusi Layanan</h5>
+                                <p>Persentase penjualan per layanan akan ditampilkan di sini</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-section mt-4">
+                    <h5 class="mb-3">Transaksi Terbaru</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID Transaksi</th>
+                                    <th>Pengguna</th>
+                                    <th>Layanan</th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentTransactions">
+                                <!-- Data akan diisi oleh JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transactions Section -->
+            <div class="admin-section d-none" id="transactionsSection">
+                <div class="admin-header">
+                    <h3 class="mb-0">Manajemen Transaksi</h3>
+                    <div>
+                        <button class="btn btn-primary"><i class="fas fa-plus me-2"></i> Tambah Transaksi</button>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>24</h4>
+                                    <p class="text-muted">Pending</p>
+                                </div>
+                                <i class="fas fa-clock text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>128</h4>
+                                    <p class="text-muted">Selesai</p>
+                                </div>
+                                <i class="fas fa-check-circle text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>4</h4>
+                                    <p class="text-muted">Dibatalkan</p>
+                                </div>
+                                <i class="fas fa-times-circle text-danger"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h4>Rp 8.2 Jt</h4>
+                                    <p class="text-muted">Pendapatan Bulan Ini</p>
+                                </div>
+                                <i class="fas fa-dollar-sign text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID Transaksi</th>
+                                <th>Pengguna</th>
+                                <th>Layanan</th>
+                                <th>Jumlah</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allTransactions">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Services Section -->
+            <div class="admin-section d-none" id="servicesSection">
+                <div class="admin-header">
+                    <h3 class="mb-0">Manajemen Layanan</h3>
+                    <div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal"><i class="fas fa-plus me-2"></i> Tambah Layanan</button>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" placeholder="Cari layanan...">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select">
+                                            <option>Semua Kategori</option>
+                                            <option>Instagram</option>
+                                            <option>TikTok</option>
+                                            <option>YouTube</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="form-select">
+                                            <option>Status: Semua</option>
+                                            <option>Aktif</option>
+                                            <option>Nonaktif</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button class="btn btn-primary w-100">Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row" id="servicesList">
+                    <!-- Layanan akan diisi oleh JavaScript -->
+                </div>
+            </div>
+            
+            <!-- Users Section -->
+            <div class="admin-section d-none" id="usersSection">
+                <div class="admin-header">
+                    <h3 class="mb-0">Manajemen Pengguna</h3>
+                    <div>
+                        <button class="btn btn-primary"><i class="fas fa-plus me-2"></i> Tambah Pengguna</button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Telepon</th>
+                                <th>Bergabung</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Settings Section -->
+            <div class="admin-section d-none" id="settingsSection">
+                <div class="admin-header">
+                    <h3 class="mb-0">Pengaturan Sistem</h3>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Pengaturan Umum</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Website</label>
+                                    <input type="text" class="form-control" value="FollowBoost">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email Admin</label>
+                                    <input type="email" class="form-control" value="admin@followboost.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nomor WhatsApp</label>
+                                    <input type="text" class="form-control" value="+6281234567890">
+                                </div>
+                                <button class="btn btn-primary">Simpan Perubahan</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Pembayaran DANA</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Nomor DANA</label>
+                                    <input type="text" class="form-control" value="081234567890">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Pemilik</label>
+                                    <input type="text" class="form-control" value="FOLLOWBOOST">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="danaActive" checked>
+                                    <label class="form-check-label" for="danaActive">Aktifkan Pembayaran DANA</label>
+                                </div>
+                                <button class="btn btn-primary">Simpan Perubahan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Notifikasi WhatsApp</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Template Pesan Konfirmasi</label>
+                                    <textarea class="form-control" rows="4">Halo {nama}, pembayaran untuk layanan {layanan} sebesar {harga} telah berhasil. Pesanan Anda sedang diproses. Terima kasih telah menggunakan FollowBoost!</textarea>
+                                </div>
+                                <button class="btn btn-primary">Simpan Template</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Service Modal -->
+    <div class="modal fade" id="addServiceModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Layanan Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addServiceForm">
+                        <div class="mb-3">
+                            <label class="form-label">Nama Layanan</label>
+                            <input type="text" class="form-control" placeholder="Contoh: Instagram Followers" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Platform</label>
+                            <select class="form-select" required>
+                                <option value="">Pilih Platform</option>
+                                <option value="instagram">Instagram</option>
+                                <option value="tiktok">TikTok</option>
+                                <option value="youtube">YouTube</option>
+                                <option value="twitter">Twitter</option>
+                                <option value="facebook">Facebook</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Harga per 1000</label>
+                            <input type="number" class="form-control" placeholder="50000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Deskripsi</label>
+                            <textarea class="form-control" rows="3" placeholder="Deskripsi layanan"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" required>
+                                <option value="active">Aktif</option>
+                                <option value="inactive">Nonaktif</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary">Simpan Layanan</button>
                 </div>
             </div>
         </div>
@@ -717,237 +1372,457 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Contoh fungsi untuk menangani login
+        // Data contoh untuk simulasi
+        const sampleUsers = [
+            { id: 1, name: "Admin User", email: "admin@example.com", password: "admin123", role: "Administrator", phone: "08123456789" },
+            { id: 2, name: "Ahmad Rizki", email: "ahmad@example.com", password: "user123", role: "User", phone: "08123456780" },
+            { id: 3, name: "Sari Dewi", email: "sari@example.com", password: "user123", role: "User", phone: "08123456781" }
+        ];
+
+        const sampleServices = [
+            { id: 1, name: "Instagram Followers", platform: "instagram", pricePer1000: 50000, description: "Tambah followers Instagram dengan cepat dan aman", status: "active" },
+            { id: 2, name: "TikTok Followers", platform: "tiktok", pricePer1000: 45000, description: "Tingkatkan followers TikTok Anda dengan mudah", status: "active" },
+            { id: 3, name: "YouTube Subscribers", platform: "youtube", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
+            { id: 4, name: "Twitter Followers", platform: "twitter", pricePer1000: 40000, description: "Tingkatkan followers akun Twitter Anda", status: "active" },
+            { id: 5, name: "Facebook Likes", platform: "facebook", pricePer1000: 35000, description: "Tambah likes untuk halaman Facebook Anda", status: "active" },
+            { id: 6, name: "Instagram Likes", platform: "instagram", pricePer1000: 30000, description: "Tingkatkan engagement dengan likes Instagram", status: "active" }
+        ];
+
+        const sampleTransactions = [
+            { id: "TRX001", user: "Ahmad Rizki", service: "Instagram Followers", quantity: 1000, amount: 50000, date: "12 Nov 2023", status: "completed" },
+            { id: "TRX002", user: "Sari Dewi", service: "TikTok Followers", quantity: 2000, amount: 90000, date: "11 Nov 2023", status: "pending" },
+            { id: "TRX003", user: "Budi Santoso", service: "YouTube Subscribers", quantity: 500, amount: 37500, date: "10 Nov 2023", status: "completed" },
+            { id: "TRX004", user: "Rina Andari", service: "Instagram Likes", quantity: 1000, amount: 30000, date: "09 Nov 2023", status: "completed" }
+        ];
+
+        // Variabel global untuk data pesanan
+        let currentOrder = {
+            service: "",
+            quantity: 1000,
+            price: 0,
+            accountInfo: "",
+            notes: ""
+        };
+
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, type = 'success') {
+            // Buat elemen notifikasi
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Hapus notifikasi setelah 5 detik
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        // Fungsi untuk login
+        function loginUser(email, password) {
+            const user = sampleUsers.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Simpan info user ke localStorage
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                
+                // Tampilkan notifikasi
+                showNotification(`Login berhasil! Selamat datang, ${user.name}.`, 'success');
+                
+                // Redirect ke admin panel
+                showAdminPanel(user);
+                
+                return true;
+            } else {
+                showNotification('Email atau password salah!', 'danger');
+                return false;
+            }
+        }
+
+        // Fungsi untuk registrasi
+        function registerUser(name, email, phone, password) {
+            // Cek apakah email sudah terdaftar
+            const existingUser = sampleUsers.find(u => u.email === email);
+            
+            if (existingUser) {
+                showNotification('Email sudah terdaftar!', 'danger');
+                return false;
+            }
+            
+            // Buat user baru
+            const newUser = {
+                id: sampleUsers.length + 1,
+                name: name,
+                email: email,
+                password: password,
+                role: "User",
+                phone: phone
+            };
+            
+            // Simpan user (dalam aplikasi nyata, ini akan disimpan ke database)
+            sampleUsers.push(newUser);
+            
+            // Simpan info user ke localStorage
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            // Tampilkan notifikasi
+            showNotification('Registrasi berhasil! Selamat datang.', 'success');
+            
+            // Redirect ke admin panel
+            showAdminPanel(newUser);
+            
+            return true;
+        }
+
+        // Fungsi untuk menampilkan admin panel
+        function showAdminPanel(user) {
+            document.getElementById('mainContent').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            
+            // Update info user di header
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userRole').textContent = user.role;
+            document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+            
+            // Load data dashboard
+            loadDashboardData();
+        }
+
+        // Fungsi untuk logout
+        function logout() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('adminPanel').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            showNotification('Anda telah logout.', 'info');
+        }
+
+        // Fungsi untuk memuat data dashboard
+        function loadDashboardData() {
+            // Update statistik
+            document.getElementById('totalTransactions').textContent = sampleTransactions.length;
+            document.getElementById('totalUsers').textContent = sampleUsers.length;
+            document.getElementById('totalServices').textContent = sampleServices.length;
+            
+            // Hitung total pendapatan
+            const totalRevenue = sampleTransactions
+                .filter(t => t.status === 'completed')
+                .reduce((sum, t) => sum + t.amount, 0);
+            
+            document.getElementById('totalRevenue').textContent = `Rp ${(totalRevenue / 1000).toFixed(1)} Jt`;
+            
+            // Isi tabel transaksi terbaru
+            const recentTransactionsTable = document.getElementById('recentTransactions');
+            recentTransactionsTable.innerHTML = '';
+            
+            sampleTransactions.slice(0, 5).forEach(transaction => {
+                const statusClass = transaction.status === 'completed' ? 'bg-success' : 
+                                  transaction.status === 'pending' ? 'bg-warning' : 'bg-danger';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.id}</td>
+                    <td>${transaction.user}</td>
+                    <td>${transaction.service}</td>
+                    <td>${transaction.date}</td>
+                    <td><span class="badge ${statusClass}">${transaction.status === 'completed' ? 'Selesai' : 
+                                                           transaction.status === 'pending' ? 'Pending' : 'Dibatalkan'}</span></td>
+                    <td><button class="btn btn-sm btn-primary">Detail</button></td>
+                `;
+                recentTransactionsTable.appendChild(row);
+            });
+            
+            // Isi tabel semua transaksi
+            const allTransactionsTable = document.getElementById('allTransactions');
+            allTransactionsTable.innerHTML = '';
+            
+            sampleTransactions.forEach(transaction => {
+                const statusClass = transaction.status === 'completed' ? 'bg-success' : 
+                                  transaction.status === 'pending' ? 'bg-warning' : 'bg-danger';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.id}</td>
+                    <td>${transaction.user}</td>
+                    <td>${transaction.service}</td>
+                    <td>${transaction.quantity}</td>
+                    <td>${transaction.date}</td>
+                    <td><span class="badge ${statusClass}">${transaction.status === 'completed' ? 'Selesai' : 
+                                                           transaction.status === 'pending' ? 'Pending' : 'Dibatalkan'}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-1">Edit</button>
+                        <button class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                `;
+                allTransactionsTable.appendChild(row);
+            });
+            
+            // Isi daftar layanan
+            const servicesList = document.getElementById('servicesList');
+            servicesList.innerHTML = '';
+            
+            sampleServices.forEach(service => {
+                const statusBadge = service.status === 'active' ? 
+                    '<span class="badge bg-success">Aktif</span>' : 
+                    '<span class="badge bg-secondary">Nonaktif</span>';
+                
+                const platformIcon = service.platform === 'instagram' ? 'fab fa-instagram' :
+                                   service.platform === 'tiktok' ? 'fab fa-tiktok' :
+                                   service.platform === 'youtube' ? 'fab fa-youtube' :
+                                   service.platform === 'twitter' ? 'fab fa-twitter' :
+                                   service.platform === 'facebook' ? 'fab fa-facebook' : 'fas fa-cog';
+                
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'col-md-6 col-lg-4 mb-4';
+                serviceCard.innerHTML = `
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title">${service.name}</h5>
+                                ${statusBadge}
+                            </div>
+                            <p class="card-text text-muted">${service.description}</p>
+                            <p class="card-text fw-bold">Rp ${service.pricePer1000.toLocaleString()} / 1000</p>
+                            <p class="card-text"><small class="text-muted"><i class="${platformIcon} me-1"></i> ${service.platform.charAt(0).toUpperCase() + service.platform.slice(1)}</small></p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <button class="btn btn-sm btn-primary me-1">Edit</button>
+                            <button class="btn btn-sm btn-danger">Hapus</button>
+                        </div>
+                    </div>
+                `;
+                servicesList.appendChild(serviceCard);
+            });
+            
+            // Isi tabel pengguna
+            const usersTable = document.getElementById('usersTable');
+            usersTable.innerHTML = '';
+            
+            sampleUsers.forEach(user => {
+                const roleBadge = user.role === 'Administrator' ? 
+                    '<span class="badge bg-primary">Admin</span>' : 
+                    '<span class="badge bg-secondary">User</span>';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>01 Nov 2023</td>
+                    <td>${roleBadge}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary me-1">Edit</button>
+                        <button class="btn btn-sm btn-danger">Hapus</button>
+                    </td>
+                `;
+                usersTable.appendChild(row);
+            });
+        }
+
+        // Fungsi untuk navigasi antar section di admin panel
+        function setupAdminNavigation() {
+            const navLinks = document.querySelectorAll('.sidebar a[data-section]');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Hapus class active dari semua link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Tambah class active ke link yang diklik
+                    this.classList.add('active');
+                    
+                    // Sembunyikan semua section
+                    const sections = document.querySelectorAll('.admin-section');
+                    sections.forEach(section => section.classList.add('d-none'));
+                    
+                    // Tampilkan section yang dipilih
+                    const sectionId = this.getAttribute('data-section') + 'Section';
+                    document.getElementById(sectionId).classList.remove('d-none');
+                });
+            });
+        }
+
+        // Fungsi untuk mengatur pesanan
+        function setupOrderSystem() {
+            // Event listener untuk tombol pesan
+            document.querySelectorAll('.btn-order').forEach(button => {
+                button.addEventListener('click', function() {
+                    const service = this.getAttribute('data-service');
+                    currentOrder.service = service;
+                    
+                    // Tampilkan modal pesanan
+                    const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+                    orderModal.show();
+                    
+                    // Set nilai default
+                    document.getElementById('serviceSelect').value = service;
+                    updateOrderSummary();
+                });
+            });
+            
+            // Event listener untuk perubahan pada form pesanan
+            document.getElementById('serviceSelect').addEventListener('change', function() {
+                currentOrder.service = this.value;
+                updateOrderSummary();
+            });
+            
+            document.getElementById('quantityInput').addEventListener('input', function() {
+                currentOrder.quantity = parseInt(this.value) || 0;
+                updateOrderSummary();
+            });
+            
+            document.getElementById('accountInfo').addEventListener('input', function() {
+                currentOrder.accountInfo = this.value;
+            });
+            
+            document.getElementById('orderNotes').addEventListener('input', function() {
+                currentOrder.notes = this.value;
+            });
+            
+            // Event listener untuk tombol lanjutkan pembayaran
+            document.getElementById('proceedPayment').addEventListener('click', function() {
+                if (!currentOrder.service) {
+                    showNotification('Pilih layanan terlebih dahulu!', 'warning');
+                    return;
+                }
+                
+                if (!currentOrder.accountInfo) {
+                    showNotification('Masukkan informasi akun terlebih dahulu!', 'warning');
+                    return;
+                }
+                
+                // Tutup modal pesanan
+                const orderModal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+                orderModal.hide();
+                
+                // Tampilkan modal pembayaran
+                const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+                paymentModal.show();
+            });
+            
+            // Event listener untuk tombol konfirmasi pembayaran
+            document.getElementById('confirmPayment').addEventListener('click', function() {
+                // Simulasi pembuatan transaksi
+                const newTransaction = {
+                    id: 'TRX' + (sampleTransactions.length + 1).toString().padStart(3, '0'),
+                    user: JSON.parse(localStorage.getItem('currentUser')).name,
+                    service: currentOrder.service,
+                    quantity: currentOrder.quantity,
+                    amount: currentOrder.price,
+                    date: new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }),
+                    status: 'pending'
+                };
+                
+                sampleTransactions.push(newTransaction);
+                
+                // Redirect ke WhatsApp
+                const phoneNumber = "6281234567890"; // Ganti dengan nomor WhatsApp bisnis
+                const message = `Halo, saya ingin konfirmasi pembayaran untuk pesanan berikut:%0A%0A
+Layanan: ${currentOrder.service}%0A
+Jumlah: ${currentOrder.quantity}%0A
+Total: Rp ${currentOrder.price.toLocaleString()}%0A
+Akun: ${currentOrder.accountInfo}%0A%0A
+Berikut adalah bukti transfernya:`;
+                
+                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+                
+                // Tutup modal pembayaran
+                const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+                paymentModal.hide();
+                
+                showNotification('Pesanan berhasil dibuat! Silakan konfirmasi pembayaran via WhatsApp.', 'success');
+            });
+        }
+
+        // Fungsi untuk memperbarui ringkasan pesanan
+        function updateOrderSummary() {
+            const service = sampleServices.find(s => s.name === currentOrder.service);
+            
+            if (service) {
+                currentOrder.price = Math.round((service.pricePer1000 * currentOrder.quantity) / 1000);
+                
+                // Update tampilan
+                document.getElementById('priceDisplay').value = currentOrder.price.toLocaleString();
+                document.getElementById('summaryService').textContent = currentOrder.service;
+                document.getElementById('summaryQuantity').textContent = currentOrder.quantity.toLocaleString();
+                document.getElementById('summaryPrice').textContent = 'Rp ' + currentOrder.price.toLocaleString();
+                document.getElementById('summaryTotal').textContent = 'Rp ' + currentOrder.price.toLocaleString();
+                document.getElementById('paymentTotal').textContent = 'Rp ' + currentOrder.price.toLocaleString();
+                
+                // Update progress bar
+                const progress = (currentOrder.quantity / 10000) * 100;
+                document.querySelector('.progress-bar').style.width = Math.min(progress, 100) + '%';
+            } else {
+                document.getElementById('summaryService').textContent = '-';
+                document.getElementById('summaryQuantity').textContent = '-';
+                document.getElementById('summaryPrice').textContent = '-';
+                document.getElementById('summaryTotal').textContent = '-';
+            }
+        }
+
+        // Event listeners saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
-            // Simulasi login admin (dalam implementasi nyata, ini akan dilakukan melalui backend)
-            document.querySelector('#loginModal form').addEventListener('submit', function(e) {
+            // Cek apakah user sudah login
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                showAdminPanel(currentUser);
+            }
+            
+            // Setup form login
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 
-                // Contoh sederhana: jika email adalah admin@example.com, tampilkan panel admin
-                if (email === 'admin@example.com' && password === 'admin123') {
-                    document.querySelector('.admin-panel').classList.remove('d-none');
-                    document.querySelector('body').style.overflow = 'hidden';
-                    document.querySelector('#loginModal').classList.remove('show');
-                    document.querySelector('body').classList.remove('modal-open');
-                    document.querySelector('.modal-backdrop').remove();
-                } else {
-                    alert('Login berhasil! (simulasi)');
+                if (loginUser(email, password)) {
                     // Tutup modal login
-                    var loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+                    const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
                     loginModal.hide();
                 }
             });
             
-            // Simulasi pendaftaran
-            document.querySelector('#registerModal form').addEventListener('submit', function(e) {
+            // Setup form registrasi
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                alert('Pendaftaran berhasil! Silakan login.');
-                // Tutup modal pendaftaran
-                var registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-                registerModal.hide();
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const phone = document.getElementById('registerPhone').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                
+                // Validasi password
+                if (password !== confirmPassword) {
+                    showNotification('Password dan konfirmasi password tidak cocok!', 'danger');
+                    return;
+                }
+                
+                if (registerUser(name, email, phone, password)) {
+                    // Tutup modal registrasi
+                    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                    registerModal.hide();
+                }
             });
             
-            // Simulasi pembelian produk
-            document.querySelectorAll('#productModal .btn-outline-primary').forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('Produk ditambahkan ke keranjang! (simulasi)');
-                    var productModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
-                    productModal.hide();
-                });
+            // Setup logout button
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
             });
+            
+            // Setup admin navigation
+            setupAdminNavigation();
+            
+            // Setup sistem pesanan
+            setupOrderSystem();
         });
     </script>
 </body>
-</html>      color: #00ff88;
-    }
-
-    .info-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .info-option {
-      background-color: #1a1a1a;
-      border: 1px solid #00ff88;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: neon-border 2s infinite alternate;
-    }
-
-    .info-option:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 12px #00ff88;
-    }
-
-    .info-option h3 {
-      color: #00ff88;
-      margin-bottom: 10px;
-    }
-
-    .info-option p {
-      color: #ccc;
-      margin: 5px 0;
-    }
-
-    .info-option a {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 15px;
-      background-color: #25D366;
-      color: #fff;
-      border-radius: 6px;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    .info-option a:hover {
-      background-color: #1ebc5a;
-    }
-     
-    .    #filter {
-      margin-bottom: 25px;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      width: 220px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .btn-wa {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #222;
-      color: #00ff88;
-      border: 1px solid #00ff88;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .btn-wa:hover {
-      background-color: #333;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #666;
-    }
-    audio {
-      margin-top: 20px;
-      width: 90%;
-      max-width: 400px;
-    }
-    
-    @keyframes neon-border {
-      0%   { box-shadow: 0 0 12px #00ff88; border-color: #00ff88; }
-      50%  { box-shadow: 0 0 12px #00ccff; border-color: #00ccff; }
-      100% { box-shadow: 0 0 12px #00ff88; border-color: #00ff88; }
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="info-card">
-        <h1>Selamat Datang di Toko Barz_Market</h1>
-  <div class="welcome">
-    </h3>Butuh followers, likes, views, dan engagement untuk semua sosial media?  
-    Kamu di tempat yang tepat! Pilih produk favoritmu, isi jumlah,  
-    dan langsung order via WhatsApp.</h3>  
-    <h3 /></h3 />
-    <strong>Gratis konsultasi & layanan cepat!</strong>
-  </div>
-
-      <div class="info-options">
-        <div class="info-option">
-          <h3>FOLLOWRS, LIKE, VEWS TIKTOK</h3>
-          <img src="https://iili.io/KcpqUVj.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          
-          <p>1.000 FOLLOWERS = Rp 45.000</p>
-          <p>500   FOLLOWERS = Rp 30.000</p>
-          <p>1.000 LIKE     = Rp 17.000 </p>
-          <p>500   LIKE     = Rp 9.000 </p>
-          <p>10.000 VEWS    = Rp 12.00</p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-        <div class="info-option">
-          <h3>FOLLOWERS, LIKE, VEWS INSTAGRAM</h3>
-          <img src="https://iili.io/KcpCQna.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 FOLLOWERS = Rp 87.000</p>
-          <p>500   FOLLOWERS = Rp 45.000</p>
-          <p>1.000 LIKE     = Rp 30.000 </p>
-          <p>500   LIKE     = Rp 17.000 </p>
-          <p>1.000 VEWS    = Rp 15.000</p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-        <div class="info-option">
-          <h3>FOLLOWERS, LIKE, VEWS FACEBOOK</h3>
-          <img src="https://iili.io/Kcpxst9.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 FOLLOWERS = Rp 35.000</p>
-          <p>500   FOLLOWERS = Rp 20.000</p>
-          <p>1.000 LIKE     = Rp 24.000 </p>
-          <p>500   LIKE     = Rp 15.000 </p>
-          <p>10.000 VEWS    = Rp 24.00</p>
-          <p>UNLOCK FTR MK🔓= Rp 350.000<p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-                <div class="info-option">
-          <h3>MEMBER,REACTION EMOJI, WHATSAPP CHANEL</h3>
-          <img src="https://iili.io/Kl90Oe1.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 FOLLOWERS = Rp 75.000</p>
-          <p>500   FOLLOWERS = Rp 40.000</p>
-          <p>1.000 EMOT BEBAS     = Rp 36.000 </p>
-          <p>500   EMOT BEBAS     = Rp 20.000 </p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-                <div class="info-option">
-          <h3>FOLLOWRS, LIKE SNACK VIDEO</h3>
-          <img src="https://iili.io/KcpOOdb.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 FOLLOWERS = Rp 45.000</p>
-          <p>500   FOLLOWERS = Rp 32.000</p>
-          <p>1.000 LIKE     = Rp 25.000 </p>
-          <p>500   LIKE     = Rp 13.000 </p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-                <div class="info-option">
-         <h3>FOLLOWRS AND VEWS SHOPEE</h3>
-          <img src="https://iili.io/Kcp7ukJ.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 FOLLOWERS = Rp 25.000</p>
-          <p>500   FOLLOWERS = Rp 15.000</p>
-          <p>10.000 VEWS LIVE   = Rp 12.00</p>
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-                <div class="info-option">
-          <h3>SUBSCRIBE, LIKE, VEWS YOUTUBE</h3>
-          <img src="https://iili.io/Kcpve7s.jpg/100x50?text=Tanpa akses fitur premium dan limit terbatas" alt="Tanpa akses fitur premium dan limit terbatas" />
-          <p>1.000 SUBSCRIBE = Rp 165.000</p>
-          <p>500   FOLLOWERS = Rp 125.000</p>
-          <p>1.000 LIKE     = Rp 45.000 </p>
-          <p>500   LIKE     = Rp 30.000 </p>
-          <p>10.000 VEWS{UNTUK MONET PENGHASIL UANG}     = Rp 85.000</p>
-          <p>15MINT VEWS KEJAR JAM TAYANG = Rp 1.370.000
-          <a href="https://wa.me/6281318377710?text=Halo%20Bang%20Barz%20Mau%20Beli">ORDER🛍</a>
-        </div>
-        <h3 />TERIMA KASIH BOSQ😉</h3 />
-          <audio controls autoplay loop>
-     <source src="https://files.catbox.moe/8spizj.mp3" type="audio/mpeg">
-         
-      <div style="text-align: center; margin-top: 30px;">
-    <a href="menusewa.html" class="btn-wa">&larr; Kembali</a>
-  </div>
-</div>
-  </div>
-  
-    <footer>&copy; 2025 barz_market - Semua Hak Dilindungi</footer>
-      </body>
-  </html>
+</html>
