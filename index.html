@@ -426,6 +426,87 @@
             font-weight: 600;
             color: var(--primary);
         }
+        
+        /* User Profile Styles */
+        .user-panel {
+            display: none;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+        }
+        
+        .profile-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        
+        .order-history {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+        
+        .order-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .user-sidebar {
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            color: white;
+            min-height: 100vh;
+            padding-top: 20px;
+            position: fixed;
+            width: 250px;
+            z-index: 100;
+        }
+        
+        .user-content {
+            margin-left: 250px;
+            padding: 20px;
+            width: calc(100% - 250px);
+        }
+        
+        .tab-pane {
+            padding: 20px 0;
+        }
+        
+        .nav-pills .nav-link {
+            border-radius: 8px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -996,7 +1077,7 @@
         </div>
     </div>
 
-    <!-- Admin Panel -->
+    <!-- Admin Panel (Hanya untuk Admin) -->
     <div class="admin-panel" id="adminPanel">
         <div class="sidebar">
             <h4 class="text-center mb-4">Admin Panel</h4>
@@ -1335,6 +1416,129 @@
         </div>
     </div>
 
+    <!-- User Panel (Untuk Pengguna Biasa) -->
+    <div class="user-panel" id="userPanel">
+        <div class="user-sidebar">
+            <h4 class="text-center mb-4">Profil Saya</h4>
+            <a href="#" class="active" data-tab="profile"><i class="fas fa-user me-2"></i> Profil</a>
+            <a href="#" data-tab="orders"><i class="fas fa-shopping-cart me-2"></i> Pesanan Saya</a>
+            <a href="#" data-tab="settings"><i class="fas fa-cog me-2"></i> Pengaturan</a>
+            <a href="#" id="backToMainUser"><i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda</a>
+        </div>
+        <div class="user-content">
+            <div class="admin-header">
+                <h3 class="mb-0" id="userPanelTitle">Profil Saya</h3>
+                <div class="user-info">
+                    <div class="user-avatar" id="userPanelAvatar">A</div>
+                    <div>
+                        <div class="fw-bold" id="userPanelName">Nama Pengguna</div>
+                        <small class="text-muted" id="userPanelRole">Pengguna</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Tab -->
+            <div class="tab-content">
+                <div class="tab-pane active" id="profileTab">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar" id="profileAvatar">A</div>
+                            <h3 id="profileName">Nama Pengguna</h3>
+                            <p class="text-muted" id="profileEmail">email@example.com</p>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Informasi Pribadi</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="profileFullName" value="Nama Pengguna">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="profileEmailInput" value="email@example.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nomor Telepon</label>
+                                    <input type="tel" class="form-control" id="profilePhone" value="08123456789">
+                                </div>
+                                <button class="btn btn-primary" id="saveProfile">Simpan Perubahan</button>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Statistik Akun</h5>
+                                <div class="stats-card">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h4 id="userTotalOrders">5</h4>
+                                            <p class="text-muted">Total Pesanan</p>
+                                        </div>
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </div>
+                                </div>
+                                <div class="stats-card">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h4 id="userCompletedOrders">3</h4>
+                                            <p class="text-muted">Pesanan Selesai</p>
+                                        </div>
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                </div>
+                                <div class="stats-card">
+                                    <div class="d-flex justify-content-between">
+                                        <div>
+                                            <h4 id="userPendingOrders">2</h4>
+                                            <p class="text-muted">Pesanan Pending</p>
+                                        </div>
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orders Tab -->
+                <div class="tab-pane" id="ordersTab">
+                    <div class="order-history">
+                        <h5>Riwayat Pesanan</h5>
+                        <div id="userOrdersList">
+                            <!-- Daftar pesanan akan diisi oleh JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Settings Tab -->
+                <div class="tab-pane" id="settingsTab">
+                    <div class="profile-card">
+                        <h5>Pengaturan Akun</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Ganti Password</label>
+                            <input type="password" class="form-control" id="newPassword" placeholder="Password Baru">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Konfirmasi Password</label>
+                            <input type="password" class="form-control" id="confirmNewPassword" placeholder="Ulangi Password Baru">
+                        </div>
+                        <button class="btn btn-primary">Ganti Password</button>
+                        
+                        <hr class="my-4">
+                        
+                        <h5>Notifikasi</h5>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                            <label class="form-check-label" for="emailNotifications">Notifikasi Email</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="whatsappNotifications" checked>
+                            <label class="form-check-label" for="whatsappNotifications">Notifikasi WhatsApp</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Add Service Modal -->
     <div class="modal fade" id="addServiceModal" tabindex="-1">
         <div class="modal-dialog">
@@ -1410,7 +1614,9 @@
             { id: "TRX001", user: "Ahmad Rizki", service: "Instagram Followers", quantity: 1000, amount: 50000, date: "12 Nov 2023", status: "completed" },
             { id: "TRX002", user: "Sari Dewi", service: "TikTok Followers", quantity: 2000, amount: 90000, date: "11 Nov 2023", status: "pending" },
             { id: "TRX003", user: "Budi Santoso", service: "YouTube Subscribers", quantity: 500, amount: 37500, date: "10 Nov 2023", status: "completed" },
-            { id: "TRX004", user: "Rina Andari", service: "Instagram Likes", quantity: 1000, amount: 30000, date: "09 Nov 2023", status: "completed" }
+            { id: "TRX004", user: "Rina Andari", service: "Instagram Likes", quantity: 1000, amount: 30000, date: "09 Nov 2023", status: "completed" },
+            { id: "TRX005", user: "Ahmad Rizki", service: "Twitter Followers", quantity: 500, amount: 20000, date: "08 Nov 2023", status: "completed" },
+            { id: "TRX006", user: "Ahmad Rizki", service: "Facebook Likes", quantity: 1000, amount: 35000, date: "07 Nov 2023", status: "pending" }
         ];
 
         // Variabel global untuk data pesanan
@@ -1504,17 +1710,17 @@
             const userMenu = document.getElementById('userMenu');
             userMenu.innerHTML = `
                 <span class="user-greeting">Halo, ${user.name}</span>
-                <button class="btn btn-outline-primary me-2" id="userDashboardBtn">
-                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                <button class="btn btn-outline-primary me-2" id="userProfileBtn">
+                    <i class="fas fa-user me-1"></i> Profil Saya
                 </button>
                 <button class="btn btn-outline-danger" id="logoutUserBtn">
                     <i class="fas fa-sign-out-alt me-1"></i> Logout
                 </button>
             `;
             
-            // Event listener untuk tombol dashboard user
-            document.getElementById('userDashboardBtn').addEventListener('click', function() {
-                showUserDashboard(user);
+            // Event listener untuk tombol profil user
+            document.getElementById('userProfileBtn').addEventListener('click', function() {
+                showUserProfile(user);
             });
             
             // Event listener untuk tombol logout user
@@ -1523,41 +1729,72 @@
             });
         }
 
-        // Fungsi untuk menampilkan dashboard user (bukan admin)
-        function showUserDashboard(user) {
+        // Fungsi untuk menampilkan profil user (bukan admin panel)
+        function showUserProfile(user) {
             // Sembunyikan konten utama
             document.getElementById('mainContent').style.display = 'none';
             
-            // Tampilkan panel user (bukan admin panel)
-            // Di sini kita bisa membuat panel khusus untuk user biasa
-            // Untuk sekarang, kita akan menggunakan admin panel dengan batasan akses
-            document.getElementById('adminPanel').style.display = 'block';
+            // Tampilkan panel user
+            document.getElementById('userPanel').style.display = 'block';
             
             // Update info user di header
-            document.getElementById('userName').textContent = user.name;
-            document.getElementById('userRole').textContent = user.role;
-            document.getElementById('userAvatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('userPanelName').textContent = user.name;
+            document.getElementById('userPanelRole').textContent = user.role;
+            document.getElementById('userPanelAvatar').textContent = user.name.charAt(0).toUpperCase();
             
-            // Sembunyikan menu admin jika user bukan admin
-            if (user.role !== 'Administrator') {
-                document.querySelector('.sidebar').innerHTML = `
-                    <h4 class="text-center mb-4">Dashboard Saya</h4>
-                    <a href="#" class="active" data-section="userOrders"><i class="fas fa-shopping-cart me-2"></i> Pesanan Saya</a>
-                    <a href="#" data-section="userProfile"><i class="fas fa-user me-2"></i> Profil Saya</a>
-                    <a href="#" id="backToMain"><i class="fas fa-arrow-left me-2"></i> Kembali ke Beranda</a>
-                `;
-                
-                // Setup navigasi untuk user biasa
-                setupUserNavigation();
+            // Update profil user
+            document.getElementById('profileName').textContent = user.name;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profileAvatar').textContent = user.name.charAt(0).toUpperCase();
+            document.getElementById('profileFullName').value = user.name;
+            document.getElementById('profileEmailInput').value = user.email;
+            document.getElementById('profilePhone').value = user.phone;
+            
+            // Hitung statistik pesanan user
+            const userOrders = sampleTransactions.filter(t => t.user === user.name);
+            const completedOrders = userOrders.filter(t => t.status === 'completed').length;
+            const pendingOrders = userOrders.filter(t => t.status === 'pending').length;
+            
+            document.getElementById('userTotalOrders').textContent = userOrders.length;
+            document.getElementById('userCompletedOrders').textContent = completedOrders;
+            document.getElementById('userPendingOrders').textContent = pendingOrders;
+            
+            // Isi daftar pesanan user
+            const userOrdersList = document.getElementById('userOrdersList');
+            userOrdersList.innerHTML = '';
+            
+            if (userOrders.length === 0) {
+                userOrdersList.innerHTML = '<p class="text-muted text-center">Belum ada pesanan</p>';
             } else {
-                // Load data dashboard admin
-                loadDashboardData();
+                userOrders.forEach(order => {
+                    const statusClass = order.status === 'completed' ? 'bg-success' : 'bg-warning';
+                    const statusText = order.status === 'completed' ? 'Selesai' : 'Pending';
+                    
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'order-item';
+                    orderItem.innerHTML = `
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-1">${order.service}</h6>
+                                <p class="mb-1 text-muted">ID: ${order.id} | Jumlah: ${order.quantity} | Tanggal: ${order.date}</p>
+                            </div>
+                            <div class="text-end">
+                                <span class="badge ${statusClass}">${statusText}</span>
+                                <p class="mb-0 fw-bold">Rp ${order.amount.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    `;
+                    userOrdersList.appendChild(orderItem);
+                });
             }
+            
+            // Setup tab navigation untuk user panel
+            setupUserPanelNavigation();
         }
 
-        // Fungsi untuk setup navigasi user biasa
-        function setupUserNavigation() {
-            const navLinks = document.querySelectorAll('.sidebar a[data-section]');
+        // Fungsi untuk setup navigasi panel user
+        function setupUserPanelNavigation() {
+            const navLinks = document.querySelectorAll('.user-sidebar a[data-tab]');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -1569,27 +1806,65 @@
                     // Tambah class active ke link yang diklik
                     this.classList.add('active');
                     
-                    // Sembunyikan semua section
-                    const sections = document.querySelectorAll('.admin-section');
-                    sections.forEach(section => section.classList.add('d-none'));
+                    // Dapatkan tab yang dipilih
+                    const tabId = this.getAttribute('data-tab') + 'Tab';
                     
-                    // Tampilkan section yang dipilih
-                    const sectionId = this.getAttribute('data-section') + 'Section';
-                    document.getElementById(sectionId).classList.remove('d-none');
+                    // Sembunyikan semua tab
+                    document.querySelectorAll('.tab-pane').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Tampilkan tab yang dipilih
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Update judul panel
+                    const tabTitles = {
+                        'profile': 'Profil Saya',
+                        'orders': 'Pesanan Saya',
+                        'settings': 'Pengaturan Akun'
+                    };
+                    document.getElementById('userPanelTitle').textContent = tabTitles[this.getAttribute('data-tab')];
                 });
             });
             
             // Event listener untuk tombol kembali ke beranda
-            document.getElementById('backToMain').addEventListener('click', function(e) {
+            document.getElementById('backToMainUser').addEventListener('click', function(e) {
                 e.preventDefault();
-                document.getElementById('adminPanel').style.display = 'none';
+                document.getElementById('userPanel').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
+            });
+            
+            // Event listener untuk tombol simpan profil
+            document.getElementById('saveProfile').addEventListener('click', function() {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                const newName = document.getElementById('profileFullName').value;
+                const newEmail = document.getElementById('profileEmailInput').value;
+                const newPhone = document.getElementById('profilePhone').value;
+                
+                // Update data user
+                currentUser.name = newName;
+                currentUser.email = newEmail;
+                currentUser.phone = newPhone;
+                
+                // Simpan ke localStorage
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update data di sampleUsers (dalam aplikasi nyata, ini akan update database)
+                const userIndex = sampleUsers.findIndex(u => u.id === currentUser.id);
+                if (userIndex !== -1) {
+                    sampleUsers[userIndex] = currentUser;
+                }
+                
+                // Update UI
+                updateUIForLoggedInUser(currentUser);
+                showNotification('Profil berhasil diperbarui!', 'success');
             });
         }
 
         // Fungsi untuk logout user biasa
         function logoutUser() {
             localStorage.removeItem('currentUser');
+            document.getElementById('userPanel').style.display = 'none';
             document.getElementById('adminPanel').style.display = 'none';
             document.getElementById('mainContent').style.display = 'block';
             
@@ -1627,7 +1902,7 @@
             showNotification('Anda telah logout.', 'info');
         }
 
-        // Fungsi untuk memuat data dashboard
+        // Fungsi untuk memuat data dashboard admin
         function loadDashboardData() {
             // Update statistik
             document.getElementById('totalTransactions').textContent = sampleTransactions.length;
@@ -1911,6 +2186,29 @@ Berikut adalah bukti transfernya:`;
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
                 updateUIForLoggedInUser(currentUser);
+                
+                // Jika user adalah admin, tampilkan admin panel (opsional)
+                if (currentUser.role === 'Administrator') {
+                    document.getElementById('userMenu').innerHTML += `
+                        <button class="btn btn-outline-warning ms-2" id="adminPanelBtn">
+                            <i class="fas fa-cog me-1"></i> Admin Panel
+                        </button>
+                    `;
+                    
+                    document.getElementById('adminPanelBtn').addEventListener('click', function() {
+                        document.getElementById('mainContent').style.display = 'none';
+                        document.getElementById('adminPanel').style.display = 'block';
+                        document.getElementById('userPanel').style.display = 'none';
+                        
+                        // Update info admin di header
+                        document.getElementById('userName').textContent = currentUser.name;
+                        document.getElementById('userRole').textContent = currentUser.role;
+                        document.getElementById('userAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+                        
+                        // Load data dashboard
+                        loadDashboardData();
+                    });
+                }
             }
             
             // Setup form login
