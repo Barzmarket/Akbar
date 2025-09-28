@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FollowBoost - Admin Dashboard</title>
+    <title>FollowBoost - Boost Media Sosial Anda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -151,6 +151,11 @@
         .status-processing {
             background-color: #cce5ff;
             color: #004085;
+        }
+        
+        .status-cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
         }
         
         .btn-action {
@@ -354,6 +359,10 @@
             background-color: #118EEA;
         }
         
+        .whatsapp-bg {
+            background-color: #25D366;
+        }
+        
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .hero-section {
@@ -387,6 +396,96 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
+        /* Fix untuk modal backdrop */
+        .modal-backdrop {
+            z-index: 1040;
+        }
+        
+        .modal {
+            z-index: 1050;
+        }
+        
+        /* Gaya untuk profil user */
+        .user-profile-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .user-orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .user-orders-table th,
+        .user-orders-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .user-orders-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        .payment-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+        }
+
+        /* Gaya untuk testimoni */
+        .testimonial-item {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-right: 15px;
+        }
+
+        .testimonial-form {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
     </style>
 </head>
 <body>
@@ -410,9 +509,6 @@
                             <a class="nav-link" href="#services">Layanan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#pricing">Harga</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="#testimonials">Testimoni</a>
                         </li>
                     </ul>
@@ -432,8 +528,8 @@
         <!-- Hero Section -->
         <section class="hero-section">
             <div class="container text-center">
-                <h1 class="display-4 fw-bold mb-4">Tambah Followers & Likes Media Sosial</h1>
-                <p class="lead mb-4">Tingkatkan popularitas akun media sosial Anda dengan followers, likes, dan views berkualitas.</p>
+                <h1 class="display-4 fw-bold mb-4">Murah & Bergaransi FollowBoost Solusinya!</h1>
+                <p class="lead mb-4">Dapatkan followers dan likes berkualitas dengan harga terjangkau. Layanan permanen dan bergaransi hanya di FollowBoost! Tingkatkan popularitas akunmu sekarang juga.</p>
                 <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#registerModal">Mulai Sekarang</button>
             </div>
         </section>
@@ -448,67 +544,47 @@
             </div>
         </section>
 
-        <!-- Pricing Section -->
-        <section id="pricing" class="py-5 bg-light">
+        <!-- User Profile Section (Hidden by default) -->
+        <section id="user-profile" class="py-5" style="display: none;">
             <div class="container">
-                <h2 class="section-title text-center">Paket Harga</h2>
-                <div class="row justify-content-center">
-                    <!-- Paket Basic -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card pricing-card h-100 text-center">
-                            <div class="card-header py-4 bg-white">
-                                <h5 class="card-title">Basic</h5>
-                                <div class="price display-4 fw-bold">Rp 25.000</div>
-                                <p class="text-muted">Untuk pemula</p>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled mb-4">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 500 Followers</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai dalam 1 jam</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 30 hari</li>
-                                    <li class="mb-2"><i class="fas fa-times text-muted me-2"></i> Support prioritas</li>
-                                </ul>
-                                <button class="btn btn-outline-primary w-100 btn-order" data-service="Paket Basic" data-price="25000">Pilih Paket</button>
+                <h2 class="section-title text-center">Profil Saya</h2>
+                <div class="user-profile-section">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <i class="fas fa-user-circle fa-5x text-primary mb-3"></i>
+                                <h4 id="profileUserName">Nama User</h4>
+                                <p class="text-muted" id="profileUserEmail">user@example.com</p>
+                                <button class="btn btn-outline-primary" id="editProfileBtn">
+                                    <i class="fas fa-edit me-1"></i> Edit Profil
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Paket Professional -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card pricing-card featured h-100 text-center">
-                            <div class="card-header py-4 bg-primary text-white">
-                                <h5 class="card-title">Professional</h5>
-                                <div class="price display-4 fw-bold">Rp 75.000</div>
-                                <p>Paling populer</p>
+                        <div class="col-md-8">
+                            <h5>Pesanan Saya</h5>
+                            <div class="table-responsive">
+                                <table class="user-orders-table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Pesanan</th>
+                                            <th>Layanan</th>
+                                            <th>Jumlah</th>
+                                            <th>Total</th>
+                                            <th>Status</th>
+                                            <th>Tanggal</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userOrdersTable">
+                                        <!-- Data pesanan user akan dimuat di sini -->
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled mb-4">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 2.000 Followers</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai dalam 30 menit</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 60 hari</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support prioritas</li>
-                                </ul>
-                                <button class="btn btn-primary w-100 btn-order" data-service="Paket Professional" data-price="75000">Pilih Paket</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Paket Enterprise -->
-                    <div class="col-md-4 mb-4">
-                        <div class="card pricing-card h-100 text-center">
-                            <div class="card-header py-4 bg-white">
-                                <h5 class="card-title">Enterprise</h5>
-                                <div class="price display-4 fw-bold">Rp 150.000</div>
-                                <p class="text-muted">Untuk bisnis</p>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled mb-4">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> 5.000 Followers</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Mulai segera</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Garansi 90 hari</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Support 24/7</li>
-                                </ul>
-                                <button class="btn btn-outline-primary w-100 btn-order" data-service="Paket Enterprise" data-price="150000">Pilih Paket</button>
+                            <div id="noOrdersMessage" class="text-center py-4" style="display: none;">
+                                <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                                <h5>Belum ada pesanan</h5>
+                                <p class="text-muted">Silakan pesan layanan untuk melihat riwayat pesanan Anda</p>
+                                <a href="#services" class="btn btn-primary">Lihat Layanan</a>
                             </div>
                         </div>
                     </div>
@@ -517,73 +593,39 @@
         </section>
 
         <!-- Testimonials Section -->
-        <section id="testimonials" class="py-5">
+        <section id="testimonials" class="py-5 bg-light">
             <div class="container">
                 <h2 class="section-title text-center">Testimoni Pelanggan</h2>
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="https://randomuser.me/api/portraits/women/32.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                    <div>
-                                        <h6 class="mb-0">Sari Dewi</h6>
-                                        <small class="text-muted">Influencer</small>
-                                    </div>
-                                </div>
-                                <p class="card-text">"Followers Instagram saya naik 2000 dalam waktu 2 hari. Pelayanan cepat dan hasilnya memuaskan!"</p>
-                                <div class="text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                
+                <!-- Form Testimoni (Hanya untuk user yang login) -->
+                <div class="testimonial-form mb-5" id="testimonialFormContainer" style="display: none;">
+                    <h4 class="mb-3">Tambah Testimoni Anda</h4>
+                    <form id="testimonialForm">
+                        <div class="mb-3">
+                            <label for="testimonialName" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="testimonialName" required>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="https://randomuser.me/api/portraits/men/44.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                    <div>
-                                        <h6 class="mb-0">Ahmad Rizki</h6>
-                                        <small class="text-muted">Content Creator</small>
-                                    </div>
-                                </div>
-                                <p class="card-text">"Saya pesan followers untuk TikTok, hasilnya sesuai dan prosesnya cepat. Recommended banget!"</p>
-                                <div class="text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="testimonialMessage" class="form-label">Testimoni</label>
+                            <textarea class="form-control" id="testimonialMessage" rows="3" required placeholder="Bagaimana pengalaman Anda menggunakan FollowBoost?"></textarea>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
-                                    <img src="https://randomuser.me/api/portraits/women/65.jpg" class="rounded-circle me-3" width="50" height="50" alt="User">
-                                    <div>
-                                        <h6 class="mb-0">Diana Putri</h6>
-                                        <small class="text-muted">Bisnis Online</small>
-                                    </div>
-                                </div>
-                                <p class="card-text">"Sejak menggunakan jasa FollowBoost, engagement di akun bisnis saya meningkat signifikan."</p>
-                                <div class="text-warning">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="mb-3">
+                            <label for="testimonialRating" class="form-label">Rating</label>
+                            <select class="form-select" id="testimonialRating" required>
+                                <option value="5">★★★★★ (Sangat Puas)</option>
+                                <option value="4">★★★★☆ (Puas)</option>
+                                <option value="3">★★★☆☆ (Cukup)</option>
+                                <option value="2">★★☆☆☆ (Kurang Puas)</option>
+                                <option value="1">★☆☆☆☆ (Tidak Puas)</option>
+                            </select>
                         </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Kirim Testimoni</button>
+                    </form>
+                </div>
+
+                <!-- Daftar Testimoni -->
+                <div id="testimonialsList">
+                    <!-- Testimoni akan dimuat di sini -->
                 </div>
             </div>
         </section>
@@ -595,44 +637,45 @@
                     <div class="col-md-4 mb-4">
                         <h5 class="mb-3"><i class="fas fa-rocket me-2"></i>FollowBoost</h5>
                         <p>Tingkatkan popularitas media sosial Anda dengan followers, likes, dan views berkualitas.</p>
-                        <div class="d-flex">
-                            <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="text-white me-3"><i class="fab fa-tiktok"></i></a>
-                            <a href="#" class="text-white me-3"><i class="fab fa-youtube"></i></a>
-                            <a href="#" class="text-white"><i class="fab fa-whatsapp"></i></a>
+                       <h5 class="mb-3">HUBUNGI KAMI </h5>
+                        <div class="col-md-2 mb-4">
+              
+                            <li href="" class="text-white me-3"><i class="fab fa-instagram"></i>Barz_Market</li>
+                            <li href="#" class="text-white me-3"><i class="fab fa-tiktok"></i>Barz_Xmr</li>
+                            <li href="#" class="text-white"><i class="fab fa-youtube"></i>Barz_Market</li>
+                            <a href="#"
                         </div>
                     </div>
-                    <div class="col-md-2 mb-4">
-                        <h5 class="mb-3">Tautan Cepat</h5>
+                    <div class="">
+                        <h5 class="mb-3"></h5>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-white-50 text-decoration-none">Beranda</a></li>
-                            <li><a href="#services" class="text-white-50 text-decoration-none">Layanan</a></li>
-                            <li><a href="#pricing" class="text-white-50 text-decoration-none">Harga</a></li>
-                            <li><a href="#testimonials" class="text-white-50 text-decoration-none">Testimoni</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none"></a></li>
+                            <li><a href="#services" class="text-white-50 text-decoration-none"></a></li>
+                            <li><a href="#testimonials" class="text-white-50 text-decoration-none"></a></li>
                         </ul>
                     </div>
                     <div class="col-md-3 mb-4">
-                        <h5 class="mb-3">Bantuan</h5>
+                        <h5 class="mb-3"></h5></h5>
                         <ul class="list-unstyled">
-                            <li><a href="#" class="text-white-50 text-decoration-none">FAQ</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none">Syarat & Ketentuan</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none">Kebijakan Privasi</a></li>
-                            <li><a href="#" class="text-white-50 text-decoration-none">Hubungi Kami</a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none"></a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none"></a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none"></a></li>
+                            <li><a href="#" class="text-white-50 text-decoration-none"></a></li>
                         </ul>
                     </div>
                     <div class="col-md-3 mb-4">
                         <h5 class="mb-3">Kontak</h5>
                         <ul class="list-unstyled">
-                            <li class="mb-2"><i class="fas fa-envelope me-2"></i> cs@followboost.com</li>
-                            <li class="mb-2"><i class="fas fa-phone me-2"></i> +62 812-3456-7890</li>
-                            <li class="mb-2"><i class="fab fa-whatsapp me-2"></i> +62 812-3456-7890</li>
+                            <li class="mb-2"><i class="fas fa-envelope me-2"></i> cs@barz_xmr.com</li>
+                            <li class="mb-2"><i class="fas fa-phone me-2"></i> +62 813-1837-7710</li>
+                            <li class="mb-2"><i class="fab fa-whatsapp me-2"></i> +62 813-1837-7710</li>
                             <li><i class="fas fa-map-marker-alt me-2"></i> Jakarta, Indonesia</li>
                         </ul>
                     </div>
                 </div>
                 <hr class="my-4">
                 <div class="text-center">
-                    <p class="mb-0">&copy; 2023 FollowBoost. All rights reserved.</p>
+                    <p class="mb-0">&copy; 2025 FollowBoost.By Barz_Market.</p>
                 </div>
             </div>
         </footer>
@@ -640,412 +683,481 @@
 
     <!-- Admin Dashboard (Hidden by default) -->
     <div class="admin-dashboard" id="adminDashboard">
-        <div class="container-fluid">
-            <div class="row">
-                <!-- Sidebar -->
-                <div class="col-md-2 sidebar">
-                    <div class="sidebar-header">
-                        <h4><i class="fas fa-rocket me-2"></i>FollowBoost</h4>
-                        <p class="mb-0">Admin Panel</p>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h4><i class="fas fa-rocket me-2"></i>FollowBoost</h4>
+                <p class="mb-0">Admin Panel</p>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a data-page="dashboard" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a data-page="users"><i class="fas fa-users"></i> Manajemen Pengguna</a></li>
+                <li><a data-page="orders"><i class="fas fa-shopping-cart"></i> Manajemen Pesanan</a></li>
+                <li><a data-page="services"><i class="fas fa-cogs"></i> Manajemen Layanan</a></li>
+                <li><a data-page="packages"><i class="fas fa-box"></i> Paket Harga</a></li>
+                <li><a data-page="testimonials"><i class="fas fa-comments"></i> Testimoni</a></li>
+                <li><a data-page="research"><i class="fas fa-chart-line"></i> Riset Pengguna</a></li>
+                <li><a data-page="reports"><i class="fas fa-file-alt"></i> Laporan</a></li>
+                <li><a data-page="settings"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                <li><a id="adminLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+                <div class="container-fluid">
+                    <button class="btn btn-light" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h4 class="mb-0" id="pageTitle">Dashboard Admin</h4>
+                    <div class="navbar-nav ms-auto">
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-user-circle me-1"></i> <span id="adminName">Admin User</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" data-page="profile"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" id="adminLogoutDropdown"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
                     </div>
-                    <ul class="sidebar-menu">
-                        <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                        <li><a href="#" data-page="users"><i class="fas fa-users"></i> Manajemen Pengguna</a></li>
-                        <li><a href="#" data-page="orders"><i class="fas fa-shopping-cart"></i> Manajemen Pesanan</a></li>
-                        <li><a href="#" data-page="services"><i class="fas fa-cube"></i> Manajemen Layanan</a></li>
-                        <li><a href="#" data-page="research"><i class="fas fa-chart-line"></i> Riset Pengguna</a></li>
-                        <li><a href="#" data-page="reports"><i class="fas fa-file-alt"></i> Laporan</a></li>
-                        <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> Pengaturan</a></li>
-                        <li><a href="#" id="adminLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                    </ul>
+                </div>
+            </nav>
+
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="page-section active">
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="dashboard-card card-revenue">
+                            <i class="fas fa-wallet fa-2x"></i>
+                            <div class="stats-number" id="totalRevenue">Rp 0</div>
+                            <p>Total Pendapatan</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card card-users">
+                            <i class="fas fa-users fa-2x"></i>
+                            <div class="stats-number" id="totalUsers">0</div>
+                            <p>Total Pengguna</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card card-orders">
+                            <i class="fas fa-shopping-cart fa-2x"></i>
+                            <div class="stats-number" id="totalOrders">0</div>
+                            <p>Total Pesanan</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="dashboard-card card-pending">
+                            <i class="fas fa-clock fa-2x"></i>
+                            <div class="stats-number" id="pendingOrders">0</div>
+                            <p>Pesanan Pending</p>
+                        </div>
+                    </div>
                 </div>
                 
-                <!-- Main Content -->
-                <div class="col-md-10 main-content">
-                    <!-- Dashboard Header -->
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2 id="pageTitle">Dashboard Admin</h2>
-                        <div class="d-flex align-items-center">
-                            <span class="me-3">Halo, <strong id="adminName">Admin</strong></span>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                                    <i class="fas fa-user-cog"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#" data-page="profile"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
-                                    <li><a class="dropdown-item" href="#" data-page="settings"><i class="fas fa-cog me-2"></i> Pengaturan</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="#" id="adminLogoutDropdown"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
-                                </ul>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h5>Statistik Pendapatan</h5>
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <h5>Distribusi Layanan</h5>
+                            <canvas id="serviceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Aktivitas Terbaru</h5>
+                            <div id="recentActivity">
+                                <!-- Aktivitas akan dimuat di sini -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Pesanan Terbaru</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Pesanan</th>
+                                            <th>Pelanggan</th>
+                                            <th>Layanan</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recentOrdersTable">
+                                        <!-- Pesanan terbaru akan dimuat di sini -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users-section" class="page-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Manajemen Pengguna</h4>
+                    <button class="btn btn-primary" id="addUserBtn">
+                        <i class="fas fa-plus me-1"></i> Tambah Pengguna
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Telepon</th>
+                                <th>Tanggal Bergabung</th>
+                                <th>Status</th>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <!-- Data pengguna akan dimuat di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="orders-section" class="page-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Manajemen Pesanan</h4>
+                    <div>
+                        <button class="btn btn-outline-primary me-2" id="refreshOrdersBtn">
+                            <i class="fas fa-sync-alt me-1"></i> Refresh
+                        </button>
+                        <button class="btn btn-primary" id="exportOrdersBtn">
+                            <i class="fas fa-download me-1"></i> Export
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID Pesanan</th>
+                                <th>Pelanggan</th>
+                                <th>Layanan</th>
+                                <th>Jumlah</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <!-- Data pesanan akan dimuat di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Services Section -->
+            <div id="services-section" class="page-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Manajemen Layanan</h4>
+                    <button class="btn btn-primary" id="addServiceBtn">
+                        <i class="fas fa-plus me-1"></i> Tambah Layanan
+                    </button>
+                </div>
+                <div class="row" id="servicesGrid">
+                    <!-- Layanan akan dimuat di sini -->
+                </div>
+            </div>
+
+            <!-- Packages Section -->
+            <div id="packages-section" class="page-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Manajemen Paket Harga</h4>
+                    <button class="btn btn-primary" id="addPackageBtn">
+                        <i class="fas fa-plus me-1"></i> Tambah Paket
+                    </button>
+                </div>
+                <div class="row" id="packagesGrid">
+                    <!-- Paket harga akan dimuat di sini -->
+                </div>
+            </div>
+
+            <!-- Testimonials Section (Admin) -->
+            <div id="testimonials-section" class="page-section">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4>Manajemen Testimoni</h4>
+                    <button class="btn btn-outline-primary" id="refreshTestimonialsBtn">
+                        <i class="fas fa-sync-alt me-1"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Testimoni</th>
+                                <th>Rating</th>
+                                <th>Tanggal</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTestimonialsTable">
+                            <!-- Data testimoni akan dimuat di sini -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Research Section -->
+            <div id="research-section" class="page-section">
+                <h4 class="mb-4">Riset Pengguna</h4>
+                
+                <div class="research-filters mb-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-value" id="avgOrderValue">Rp 0</div>
+                                <div class="metric-label">Rata-rata Nilai Pesanan</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-value" id="userRetentionRate">0%</div>
+                                <div class="metric-label">Retensi Pengguna</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-value" id="popularService">-</div>
+                                <div class="metric-label">Layanan Terpopuler</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="metric-card">
+                                <div class="metric-value" id="completionRate">0%</div>
+                                <div class="metric-label">Tingkat Penyelesaian</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Dashboard Section -->
-                    <div class="page-section active" id="dashboard-section">
-                        <!-- Stats Cards -->
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="dashboard-card card-revenue">
-                                    <i class="fas fa-money-bill-wave fa-2x"></i>
-                                    <div class="stats-number" id="totalRevenue">Rp 0</div>
-                                    <p>Total Pendapatan</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="dashboard-card card-users">
-                                    <i class="fas fa-users fa-2x"></i>
-                                    <div class="stats-number" id="totalUsers">0</div>
-                                    <p>Total Pengguna</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="dashboard-card card-orders">
-                                    <i class="fas fa-shopping-cart fa-2x"></i>
-                                    <div class="stats-number" id="totalOrders">0</div>
-                                    <p>Total Pesanan</p>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="dashboard-card card-pending">
-                                    <i class="fas fa-clock fa-2x"></i>
-                                    <div class="stats-number" id="pendingOrders">0</div>
-                                    <p>Pesanan Pending</p>
-                                </div>
-                            </div>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Filter Layanan</label>
+                            <select class="form-select" id="researchService">
+                                <option value="">Semua Layanan</option>
+                            </select>
                         </div>
-                        
-                        <!-- Charts Row -->
-                        <div class="row mt-4">
-                            <div class="col-md-8">
-                                <div class="chart-container">
-                                    <h5>Pendapatan Bulanan</h5>
-                                    <canvas id="revenueChart" height="250"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="chart-container">
-                                    <h5>Distribusi Layanan</h5>
-                                    <canvas id="serviceChart" height="250"></canvas>
-                                </div>
-                            </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Periode</label>
+                            <select class="form-select" id="researchPeriod">
+                                <option value="7">7 Hari Terakhir</option>
+                                <option value="30" selected>30 Hari Terakhir</option>
+                                <option value="90">90 Hari Terakhir</option>
+                            </select>
                         </div>
-                        
-                        <!-- Recent Activity -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="chart-container">
-                                    <h5>Aktivitas Terbaru</h5>
-                                    <div id="recentActivity">
-                                        <!-- Activity items will be loaded here -->
-                                    </div>
+                        <div class="col-md-4 d-flex align-items-end">
+                            <button class="btn btn-primary w-100" id="applyResearchFilters">
+                                <i class="fas fa-filter me-1"></i> Terapkan Filter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h5>Perilaku Pengguna</h5>
+                            <canvas id="userBehaviorChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <h5>Demografi Pengguna</h5>
+                            <canvas id="userDemographicChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <div class="chart-container">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0">Log Aktivitas Pengguna</h5>
+                                <div>
+                                    <button class="btn btn-outline-primary btn-sm me-2" id="generateReportBtn">
+                                        <i class="fas fa-chart-bar me-1"></i> Buat Laporan
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" id="exportResearchBtn">
+                                        <i class="fas fa-download me-1"></i> Export Data
+                                    </button>
                                 </div>
+                            </div>
+                            <div id="userActivityLog">
+                                <!-- Log aktivitas akan dimuat di sini -->
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Users Management Section -->
-                    <div class="page-section" id="users-section">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Manajemen Pengguna</h4>
-                            <button class="btn btn-primary" id="addUserBtn"><i class="fas fa-plus me-1"></i> Tambah Pengguna</button>
-                        </div>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>Nama</th>
-                                        <th>Email</th>
-                                        <th>Telepon</th>
-                                        <th>Bergabung</th>
-                                        <th>Status</th>
-                                        <th>Role</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="usersTable">
-                                    <!-- Data will be populated by JavaScript -->
-                                </tbody>
-                            </table>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports-section" class="page-section">
+                <h4 class="mb-4">Laporan</h4>
+                
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value" id="monthlyRevenue">Rp 0</div>
+                            <div class="metric-label">Pendapatan Bulan Ini</div>
                         </div>
                     </div>
-                    
-                    <!-- Orders Management Section -->
-                    <div class="page-section" id="orders-section">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Manajemen Pesanan</h4>
-                            <div>
-                                <button class="btn btn-primary me-2" id="refreshOrdersBtn"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
-                                <button class="btn btn-success" id="exportOrdersBtn"><i class="fas fa-download me-1"></i> Export</button>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value" id="newUsersThisMonth">0</div>
+                            <div class="metric-label">Pengguna Baru Bulan Ini</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-card">
+                            <div class="metric-value" id="ordersThisMonth">0</div>
+                            <div class="metric-label">Pesanan Bulan Ini</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container mb-4">
+                    <h5>Laporan Bulanan</h5>
+                    <canvas id="reportsChart"></canvas>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Layanan Terpopuler</h5>
+                            <div id="popularServicesList">
+                                <!-- Daftar layanan populer akan dimuat di sini -->
                             </div>
                         </div>
-                        
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>ID Transaksi</th>
-                                        <th>Pelanggan</th>
-                                        <th>Layanan</th>
-                                        <th>Jumlah</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                        <th>Tanggal</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ordersTable">
-                                    <!-- Data will be populated by JavaScript -->
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
-                    
-                    <!-- Services Management Section -->
-                    <div class="page-section" id="services-section">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Manajemen Layanan</h4>
-                            <button class="btn btn-primary" id="addServiceBtn"><i class="fas fa-plus me-1"></i> Tambah Layanan</button>
-                        </div>
-                        
-                        <div class="row" id="servicesGrid">
-                            <!-- Services cards will be populated by JavaScript -->
-                        </div>
-                    </div>
-                    
-                    <!-- User Research Section -->
-                    <div class="page-section" id="research-section">
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4>Riset Pengguna</h4>
-                            <div>
-                                <button class="btn btn-primary me-2" id="generateReportBtn"><i class="fas fa-chart-bar me-1"></i> Generate Report</button>
-                                <button class="btn btn-success" id="exportResearchBtn"><i class="fas fa-download me-1"></i> Export Data</button>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Statistik Performa</h5>
+                            <div id="performanceStats">
+                                <!-- Statistik performa akan dimuat di sini -->
                             </div>
                         </div>
-                        
-                        <!-- Research Filters -->
-                        <div class="research-filters">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <label for="researchDateRange">Rentang Tanggal</label>
-                                    <input type="text" class="form-control" id="researchDateRange" placeholder="Pilih rentang tanggal">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings-section" class="page-section">
+                <h4 class="mb-4">Pengaturan Sistem</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Pengaturan Umum</h5>
+                            <form id="generalSettings">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Aplikasi</label>
+                                    <input type="text" class="form-control" value="FollowBoost">
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="researchService">Layanan</label>
-                                    <select class="form-select" id="researchService">
-                                        <option value="">Semua Layanan</option>
-                                        <!-- Options will be populated by JavaScript -->
+                                <div class="mb-3">
+                                    <label class="form-label">Email Admin</label>
+                                    <input type="email" class="form-control" value="admin@followboost.com">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nomor WhatsApp</label>
+                                    <input type="text" class="form-control" value="+6281234567890">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Mata Uang</label>
+                                    <select class="form-select">
+                                        <option selected>IDR (Rupiah)</option>
+                                        <option>USD (Dollar)</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="researchStatus">Status</label>
-                                    <select class="form-select" id="researchStatus">
-                                        <option value="">Semua Status</option>
-                                        <option value="completed">Selesai</option>
-                                        <option value="pending">Pending</option>
-                                        <option value="processing">Diproses</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="researchAction">&nbsp;</label>
-                                    <button class="btn btn-primary w-100" id="applyResearchFilters">Terapkan Filter</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Research Metrics -->
-                        <div class="row mb-4">
-                            <div class="col-md-3">
-                                <div class="metric-card">
-                                    <div class="metric-value" id="avgOrderValue">Rp 0</div>
-                                    <div class="metric-label">Rata-rata Nilai Pesanan</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="metric-card">
-                                    <div class="metric-value" id="userRetentionRate">0%</div>
-                                    <div class="metric-label">Tingkat Retensi Pengguna</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="metric-card">
-                                    <div class="metric-value" id="popularService">-</div>
-                                    <div class="metric-label">Layanan Paling Populer</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="metric-card">
-                                    <div class="metric-value" id="completionRate">0%</div>
-                                    <div class="metric-label">Tingkat Penyelesaian</div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Research Charts -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Perilaku Pengguna Berdasarkan Waktu</h5>
-                                    <canvas id="userBehaviorChart" height="250"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Distribusi Demografi Pengguna</h5>
-                                    <canvas id="userDemographicChart" height="250"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- User Activity Log -->
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <div class="chart-container">
-                                    <h5>Log Aktivitas Pengguna</h5>
-                                    <div id="userActivityLog">
-                                        <!-- Activity log will be populated by JavaScript -->
-                                    </div>
-                                </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+                            </form>
                         </div>
                     </div>
-                    
-                    <!-- Reports Section -->
-                    <div class="page-section" id="reports-section">
-                        <h4>Laporan</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Laporan Pendapatan</h5>
-                                    <canvas id="reportsChart" height="300"></canvas>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h5>Pengaturan Keamanan</h5>
+                            <form id="securitySettings">
+                                <div class="mb-3">
+                                    <label class="form-label">Password Lama</label>
+                                    <input type="password" class="form-control">
                                 </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Statistik Pengguna</h5>
-                                    <div id="reportsStats">
-                                        <div class="metric-card">
-                                            <div class="metric-value" id="monthlyRevenue">Rp 0</div>
-                                            <div class="metric-label">Pendapatan Bulan Ini</div>
-                                        </div>
-                                        <div class="metric-card">
-                                            <div class="metric-value" id="newUsersThisMonth">0</div>
-                                            <div class="metric-label">Pengguna Baru Bulan Ini</div>
-                                        </div>
-                                        <div class="metric-card">
-                                            <div class="metric-value" id="ordersThisMonth">0</div>
-                                            <div class="metric-label">Pesanan Bulan Ini</div>
-                                        </div>
-                                    </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Password Baru</label>
+                                    <input type="password" class="form-control">
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Konfirmasi Password Baru</label>
+                                    <input type="password" class="form-control">
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="twoFactorAuth">
+                                    <label class="form-check-label" for="twoFactorAuth">Aktifkan Two-Factor Authentication</label>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Perbarui Keamanan</button>
+                            </form>
                         </div>
                     </div>
-                    
-                    <!-- Settings Section -->
-                    <div class="page-section" id="settings-section">
-                        <h4>Pengaturan Sistem</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Pengaturan Umum</h5>
-                                    <form id="generalSettings">
-                                        <div class="mb-3">
-                                            <label for="siteName" class="form-label">Nama Situs</label>
-                                            <input type="text" class="form-control" id="siteName" value="FollowBoost">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="adminEmail" class="form-label">Email Admin</label>
-                                            <input type="email" class="form-control" id="adminEmail" value="admin@followboost.com">
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="currency" class="form-label">Mata Uang</label>
-                                            <select class="form-select" id="currency">
-                                                <option value="IDR" selected>Rupiah (IDR)</option>
-                                                <option value="USD">Dollar (USD)</option>
-                                            </select>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="chart-container">
-                                    <h5>Pengaturan Keamanan</h5>
-                                    <form id="securitySettings">
-                                        <div class="mb-3">
-                                            <label for="maintenanceMode" class="form-label">Mode Maintenance</label>
-                                            <select class="form-select" id="maintenanceMode">
-                                                <option value="false" selected>Aktif</option>
-                                                <option value="true">Maintenance</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="maxLoginAttempts" class="form-label">Maksimal Percobaan Login</label>
-                                            <input type="number" class="form-control" id="maxLoginAttempts" value="5">
-                                        </div>
-                                        <div class="mb-3 form-check">
-                                            <input type="checkbox" class="form-check-input" id="enable2FA">
-                                            <label class="form-check-label" for="enable2FA">Aktifkan Two-Factor Authentication</label>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
-                                    </form>
-                                </div>
-                            </div>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profile-section" class="page-section">
+                <h4 class="mb-4">Profil Saya</h4>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="chart-container text-center">
+                            <i class="fas fa-user-circle fa-5x text-primary mb-3"></i>
+                            <h4 id="profileUserName">Admin User</h4>
+                            <p class="text-muted" id="profileUserRole">Administrator</p>
                         </div>
                     </div>
-                    
-                    <!-- Profile Section -->
-                    <div class="page-section" id="profile-section">
-                        <h4>Profil Saya</h4>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="chart-container text-center">
-                                    <div class="activity-avatar mx-auto mb-3" style="width: 100px; height: 100px;">
-                                        <i class="fas fa-user fa-3x"></i>
-                                    </div>
-                                    <h5 id="profileUserName">Admin User</h5>
-                                    <p class="text-muted" id="profileUserRole">Administrator</p>
-                                    <button class="btn btn-outline-primary btn-sm">Ubah Foto</button>
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h5>Informasi Profil</h5>
+                            <form id="profileForm">
+                                <div class="mb-3">
+                                    <label class="form-label">Nama Lengkap</label>
+                                    <input type="text" class="form-control" id="profileName" value="Admin User">
                                 </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="chart-container">
-                                    <h5>Informasi Profil</h5>
-                                    <form id="profileForm">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="profileName" class="form-label">Nama Lengkap</label>
-                                                    <input type="text" class="form-control" id="profileName" value="Admin User">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="profileEmail" class="form-label">Email</label>
-                                                    <input type="email" class="form-control" id="profileEmail" value="admin@example.com">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="profilePhone" class="form-label">Telepon</label>
-                                                    <input type="text" class="form-control" id="profilePhone" value="08123456789">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="mb-3">
-                                                    <label for="profileJoinDate" class="form-label">Bergabung Sejak</label>
-                                                    <input type="text" class="form-control" id="profileJoinDate" value="2023-10-01" disabled>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Perbarui Profil</button>
-                                    </form>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="profileEmail" value="admin@followboost.com">
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nomor Telepon</label>
+                                    <input type="text" class="form-control" id="profilePhone" value="08123456789">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Tanggal Bergabung</label>
+                                    <input type="text" class="form-control" id="profileJoinDate" value="1 Oktober 2023" readonly>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Perbarui Profil</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -1055,12 +1167,12 @@
 
     <!-- Modals -->
     <!-- Login Modal -->
-    <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content login-modal">
                 <div class="modal-header">
                     <h5 class="modal-title">Login ke Akun Anda</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form id="loginForm">
@@ -1085,7 +1197,7 @@
                     </div>
                     <hr>
                     <div class="text-center">
-                        <p class="mb-0">Belum punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal" class="text-decoration-none">Daftar di sini</a></p>
+                        <p class="mb-0">Belum punya akun? <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#registerModal" data-bs-dismiss="modal">Daftar di sini</a></p>
                     </div>
                 </div>
             </div>
@@ -1093,12 +1205,12 @@
     </div>
 
     <!-- Register Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1">
+    <div class="modal fade" id="registerModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content register-modal">
                 <div class="modal-header">
                     <h5 class="modal-title">Buat Akun Baru</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4">
                     <form id="registerForm">
@@ -1132,7 +1244,7 @@
                     </form>
                     <hr>
                     <div class="text-center">
-                        <p class="mb-0">Sudah punya akun? <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal" class="text-decoration-none">Login di sini</a></p>
+                        <p class="mb-0">Sudah punya akun? <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">Login di sini</a></p>
                     </div>
                 </div>
             </div>
@@ -1140,12 +1252,12 @@
     </div>
 
     <!-- Order Modal -->
-    <div class="modal fade" id="orderModal" tabindex="-1">
+    <div class="modal fade" id="orderModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="orderModalTitle">Pesan Layanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="orderForm">
@@ -1184,13 +1296,113 @@
         </div>
     </div>
 
-    <!-- Add User Modal -->
-    <div class="modal fade" id="userModal" tabindex="-1">
+    <!-- Payment Modal -->
+    <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pembayaran Pesanan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+                        <h4>Pesanan Berhasil Dibuat!</h4>
+                        <p class="text-muted">Silakan lakukan pembayaran untuk mengaktifkan pesanan Anda</p>
+                    </div>
+                    
+                    <div class="payment-info">
+                        <h6>Detail Pesanan:</h6>
+                        <p><strong>ID Pesanan:</strong> <span id="paymentOrderId">-</span></p>
+                        <p><strong>Layanan:</strong> <span id="paymentService">-</span></p>
+                        <p><strong>Jumlah:</strong> <span id="paymentQuantity">-</span></p>
+                        <p><strong>Total Pembayaran:</strong> <span id="paymentAmount" class="fw-bold">-</span></p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h6>Metode Pembayaran:</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="payment-method">
+                                    <i class="fab fa-whatsapp fa-2x whatsapp-bg mb-2"></i>
+                                    <h6>WhatsApp</h6>
+                                    <p class="small text-muted">Konfirmasi pembayaran via WhatsApp</p>
+                                    <a href="#" class="whatsapp-btn" id="whatsappPaymentBtn">
+                                        <i class="fab fa-whatsapp"></i> Bayar via WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="payment-method">
+                                    <i class="fas fa-university fa-2x text-primary mb-2"></i>
+                                    <h6>Transfer Bank</h6>
+                                    <p class="small text-muted">Transfer ke rekening berikut:</p>
+                                    <p class="small mb-1"><strong>BCA:</strong> 1234567890 (PT FollowBoost)</p>
+                                    <p class="small mb-1"><strong>Mandiri:</strong> 0987654321 (PT FollowBoost)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info mt-3">
+                        <small>
+                            <i class="fas fa-info-circle me-1"></i>
+                            Setelah melakukan pembayaran, pesanan Anda akan diproses dalam waktu 1-24 jam. 
+                            Anda dapat memantau status pesanan di halaman profil Anda.
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" id="viewProfileBtn">Lihat Profil Saya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Profile Modal -->
+    <div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Profil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userProfileForm">
+                        <div class="mb-3">
+                            <label for="userProfileName" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="userProfileName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userProfileEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="userProfileEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userProfilePhone" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" id="userProfilePhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userProfilePassword" class="form-label">Password Baru (Opsional)</label>
+                            <input type="password" class="form-control" id="userProfilePassword" placeholder="Kosongkan jika tidak ingin mengubah">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="saveUserProfileBtn">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Modal (Admin) -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="userModalTitle">Tambah Pengguna</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="userForm">
@@ -1204,8 +1416,8 @@
                             <input type="email" class="form-control" id="userEmail" required>
                         </div>
                         <div class="mb-3">
-                            <label for="userPhone" class="form-label">Telepon</label>
-                            <input type="tel" class="form-control" id="userPhone">
+                            <label for="userPhone" class="form-label">Nomor Telepon</label>
+                            <input type="tel" class="form-control" id="userPhone" required>
                         </div>
                         <div class="mb-3">
                             <label for="userRole" class="form-label">Role</label>
@@ -1216,7 +1428,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="userPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="userPassword">
+                            <input type="password" class="form-control" id="userPassword" required>
                         </div>
                     </form>
                 </div>
@@ -1228,13 +1440,13 @@
         </div>
     </div>
 
-    <!-- Add Service Modal -->
-    <div class="modal fade" id="serviceModal" tabindex="-1">
+    <!-- Service Modal (Admin) -->
+    <div class="modal fade" id="serviceModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="serviceModalTitle">Tambah Layanan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="serviceForm">
@@ -1251,9 +1463,6 @@
                                 <option value="youtube">YouTube</option>
                                 <option value="facebook">Facebook</option>
                                 <option value="twitter">Twitter</option>
-                                <option value="telegram">Telegram</option>
-                                <option value="spotify">Spotify</option>
-                                <option value="soundcloud">SoundCloud</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -1262,10 +1471,8 @@
                                 <option value="followers">Followers</option>
                                 <option value="likes">Likes</option>
                                 <option value="views">Views</option>
-                                <option value="live">Live Views</option>
                                 <option value="comments">Comments</option>
                                 <option value="shares">Shares</option>
-                                <option value="monetization">Monetisasi Konten</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -1274,10 +1481,10 @@
                         </div>
                         <div class="mb-3">
                             <label for="serviceDescription" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="serviceDescription" rows="3"></textarea>
+                            <textarea class="form-control" id="serviceDescription" rows="3" required></textarea>
                         </div>
                         <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="serviceStatus" checked>
+                            <input type="checkbox" class="form-check-input" id="serviceStatus">
                             <label class="form-check-label" for="serviceStatus">Aktif</label>
                         </div>
                     </form>
@@ -1285,6 +1492,51 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-primary" id="saveServiceBtn">Simpan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Package Modal (Admin) -->
+    <div class="modal fade" id="packageModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="packageModalTitle">Tambah Paket Harga</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="packageForm">
+                        <input type="hidden" id="packageId">
+                        <div class="mb-3">
+                            <label for="packageName" class="form-label">Nama Paket</label>
+                            <input type="text" class="form-control" id="packageName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="packagePrice" class="form-label">Harga</label>
+                            <input type="number" class="form-control" id="packagePrice" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="packageQuantity" class="form-label">Jumlah Followers</label>
+                            <input type="number" class="form-control" id="packageQuantity" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="packageDescription" class="form-label">Deskripsi</label>
+                            <textarea class="form-control" id="packageDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="packageFeatures" class="form-label">Fitur (pisahkan dengan koma)</label>
+                            <input type="text" class="form-control" id="packageFeatures" placeholder="Contoh: Mulai dalam 1 jam, Garansi 30 hari, Support prioritas">
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="packageStatus">
+                            <label class="form-check-label" for="packageStatus">Aktif</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary" id="savePackageBtn">Simpan</button>
                 </div>
             </div>
         </div>
@@ -1334,31 +1586,73 @@
             { id: 1, name: "Instagram Followers", platform: "instagram", type: "followers", pricePer1000: 50000, description: "Tambah followers Instagram dengan cepat dan aman", status: "active" },
             { id: 2, name: "Instagram Likes", platform: "instagram", type: "likes", pricePer1000: 25000, description: "Tambah likes pada postingan Instagram Anda", status: "active" },
             { id: 3, name: "Instagram Views", platform: "instagram", type: "views", pricePer1000: 20000, description: "Tingkatkan views video Instagram Anda", status: "active" },
-            { id: 4, name: "Instagram Live Views", platform: "instagram", type: "live", pricePer1000: 60000, description: "Tambah viewers saat live di Instagram", status: "active" },
             
             // TikTok Services
-            { id: 5, name: "TikTok Followers", platform: "tiktok", type: "followers", pricePer1000: 45000, description: "Tingkatkan followers TikTok Anda dengan mudah", status: "active" },
-            { id: 6, name: "TikTok Likes", platform: "tiktok", type: "likes", pricePer1000: 22000, description: "Tambah likes pada video TikTok Anda", status: "active" },
-            { id: 7, name: "TikTok Views", platform: "tiktok", type: "views", pricePer1000: 30000, description: "Tingkatkan views video TikTok Anda", status: "active" },
-            { id: 8, name: "TikTok Live Views", platform: "tiktok", type: "live", pricePer1000: 55000, description: "Tambah viewers saat live di TikTok", status: "active" },
+            { id: 4, name: "TikTok Followers", platform: "tiktok", type: "followers", pricePer1000: 45000, description: "Tingkatkan followers TikTok Anda dengan mudah", status: "active" },
+            { id: 5, name: "TikTok Likes", platform: "tiktok", type: "likes", pricePer1000: 22000, description: "Tambah likes pada video TikTok Anda", status: "active" },
+            { id: 6, name: "TikTok Views", platform: "tiktok", type: "views", pricePer1000: 30000, description: "Tingkatkan views video TikTok Anda", status: "active" },
             
             // YouTube Services
-            { id: 9, name: "YouTube Subscribers", platform: "youtube", type: "followers", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
-            { id: 10, name: "YouTube Likes", platform: "youtube", type: "likes", pricePer1000: 35000, description: "Tambah likes pada video YouTube Anda", status: "active" },
-            { id: 11, name: "YouTube Views", platform: "youtube", type: "views", pricePer1000: 40000, description: "Tingkatkan views video YouTube Anda", status: "active" },
-            { id: 12, name: "YouTube Live Views", platform: "youtube", type: "live", pricePer1000: 80000, description: "Tambah viewers saat live di YouTube", status: "active" },
-            
-            // Facebook Services
-            { id: 13, name: "Facebook Followers", platform: "facebook", type: "followers", pricePer1000: 40000, description: "Tambah followers Facebook dengan cepat dan aman", status: "active" },
-            { id: 14, name: "Facebook Likes", platform: "facebook", type: "likes", pricePer1000: 18000, description: "Tambah likes pada halaman Facebook Anda", status: "active" },
-            { id: 15, name: "Facebook Views", platform: "facebook", type: "views", pricePer1000: 22000, description: "Tingkatkan views video Facebook Anda", status: "active" },
-            { id: 16, name: "Facebook Live Views", platform: "facebook", type: "live", pricePer1000: 50000, description: "Tambah viewers saat live di Facebook", status: "active" },
-            { id: 17, name: "Facebook Monetisasi Konten (MK)", platform: "facebook", type: "monetization", pricePer1000: 250000, description: "Bantu membuka fitur monetisasi konten di Facebook", status: "active" },
-            
-            // Twitter Services
-            { id: 18, name: "Twitter Followers", platform: "twitter", type: "followers", pricePer1000: 35000, description: "Tambah followers Twitter dengan cepat", status: "active" },
-            { id: 19, name: "Twitter Likes", platform: "twitter", type: "likes", pricePer1000: 15000, description: "Tambah likes pada tweet Twitter Anda", status: "active" },
-            { id: 20, name: "Twitter Retweets", platform: "twitter", type: "shares", pricePer1000: 20000, description: "Tingkatkan retweets pada tweet Anda", status: "active" }
+            { id: 7, name: "YouTube Subscribers", platform: "youtube", type: "followers", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
+            { id: 8, name: "YouTube Likes", platform: "youtube", type: "likes", pricePer1000: 35000, description: "Tambah likes pada video YouTube Anda", status: "active" },
+            { id: 9, name: "YouTube Views", platform: "youtube", type: "views", pricePer1000: 40000, description: "Tingkatkan views video YouTube Anda", status: "active" }
+        ];
+
+        let samplePackages = JSON.parse(localStorage.getItem('followBoostPackages')) || [
+            { 
+                id: 1, 
+                name: "Paket Basic", 
+                price: 25000, 
+                quantity: 500, 
+                description: "Paket untuk pemula", 
+                features: ["500 Followers", "Mulai dalam 1 jam", "Garansi 30 hari"],
+                status: "active"
+            },
+            { 
+                id: 2, 
+                name: "Paket Professional", 
+                price: 75000, 
+                quantity: 2000, 
+                description: "Paket paling populer", 
+                features: ["2.000 Followers", "Mulai dalam 30 menit", "Garansi 60 hari", "Support prioritas"],
+                status: "active"
+            },
+            { 
+                id: 3, 
+                name: "Paket Enterprise", 
+                price: 150000, 
+                quantity: 5000, 
+                description: "Paket untuk bisnis", 
+                features: ["5.000 Followers", "Mulai segera", "Garansi 90 hari", "Support 24/7"],
+                status: "active"
+            }
+        ];
+
+        let sampleTestimonials = JSON.parse(localStorage.getItem('followBoostTestimonials')) || [
+            { 
+                id: 1, 
+                name: "Sari Dewi", 
+                message: "Followers Instagram saya naik 2000 dalam waktu 2 hari. Pelayanan cepat dan hasilnya memuaskan!", 
+                rating: 5, 
+                date: "2023-11-12",
+                status: "approved"
+            },
+            { 
+                id: 2, 
+                name: "Ahmad Rizki", 
+                message: "Saya pesan followers untuk TikTok, hasilnya sesuai dan prosesnya cepat. Recommended banget!", 
+                rating: 5, 
+                date: "2023-11-11",
+                status: "approved"
+            },
+            { 
+                id: 3, 
+                name: "Diana Putri", 
+                message: "Sejak menggunakan jasa FollowBoost, engagement di akun bisnis saya meningkat signifikan.", 
+                rating: 5, 
+                date: "2023-11-10",
+                status: "approved"
+            }
         ];
 
         let sampleTransactions = JSON.parse(localStorage.getItem('followBoostTransactions')) || [
@@ -1410,16 +1704,27 @@
         // Charts instances
         let revenueChart, serviceChart, behaviorChart, demographicChart, reportsChart;
 
+        // Nomor WhatsApp untuk pembayaran
+        const whatsappNumber = "6281234567890";
+
         // Fungsi untuk menyimpan data ke localStorage
         function saveDataToLocalStorage() {
             localStorage.setItem('followBoostUsers', JSON.stringify(sampleUsers));
             localStorage.setItem('followBoostServices', JSON.stringify(sampleServices));
+            localStorage.setItem('followBoostPackages', JSON.stringify(samplePackages));
+            localStorage.setItem('followBoostTestimonials', JSON.stringify(sampleTestimonials));
             localStorage.setItem('followBoostTransactions', JSON.stringify(sampleTransactions));
             localStorage.setItem('userActivities', JSON.stringify(userActivities));
         }
 
         // Fungsi untuk menampilkan notifikasi
         function showNotification(message, type = 'success') {
+            // Hapus notifikasi sebelumnya jika ada
+            const existingNotifications = document.querySelectorAll('.alert');
+            existingNotifications.forEach(notification => {
+                notification.remove();
+            });
+            
             const notification = document.createElement('div');
             notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
             notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
@@ -1435,6 +1740,36 @@
                     notification.parentNode.removeChild(notification);
                 }
             }, 5000);
+        }
+
+        // Fungsi untuk membersihkan modal backdrop jika ada masalah
+        function cleanupModalBackdrops() {
+            // Hapus semua backdrop modal yang mungkin tertinggal
+            const backdrops = document.querySelectorAll('.modal-backdrop');
+            backdrops.forEach(backdrop => {
+                backdrop.remove();
+            });
+            
+            // Hapus class modal-open dari body
+            document.body.classList.remove('modal-open');
+            document.body.style.overflow = '';
+            document.body.style.paddingRight = '';
+        }
+
+        // Fungsi untuk menutup modal dengan aman
+        function safeHideModal(modalId) {
+            const modalElement = document.getElementById(modalId);
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                } else {
+                    // Jika tidak ada instance, sembunyikan manual
+                    modalElement.style.display = 'none';
+                    modalElement.classList.remove('show');
+                    cleanupModalBackdrops();
+                }
+            }
         }
 
         // Fungsi untuk login
@@ -1462,6 +1797,9 @@
                     document.getElementById('adminDashboard').style.display = 'none';
                     updateUIForLoggedInUser(user);
                 }
+                
+                // Tutup modal login dengan aman
+                safeHideModal('loginModal');
                 
                 return true;
             } else {
@@ -1502,6 +1840,9 @@
             
             // Load recent activity
             loadRecentActivity();
+            
+            // Load recent orders
+            loadRecentOrders();
         }
 
         // Fungsi untuk memuat grafik dashboard
@@ -1607,6 +1948,45 @@
                     
                     activityContainer.appendChild(activityItem);
                 }
+            });
+        }
+
+        // Fungsi untuk memuat pesanan terbaru
+        function loadRecentOrders() {
+            const ordersTable = document.getElementById('recentOrdersTable');
+            ordersTable.innerHTML = '';
+            
+            // Get recent orders (last 5)
+            const recentOrders = sampleTransactions.slice(-5).reverse();
+            
+            if (recentOrders.length === 0) {
+                ordersTable.innerHTML = '<tr><td colspan="5" class="text-center py-3">Tidak ada pesanan</td></tr>';
+                return;
+            }
+            
+            recentOrders.forEach(order => {
+                const statusClass = getStatusClass(order.status);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.user}</td>
+                    <td>${order.service}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(order.status)}</span></td>
+                    <td>
+                        <button class="btn btn-info btn-action view-order" data-id="${order.id}" title="Lihat">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                ordersTable.appendChild(row);
+            });
+            
+            // Add event listeners to view buttons
+            document.querySelectorAll('.view-order').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    viewOrder(orderId);
+                });
             });
         }
 
@@ -1895,10 +2275,22 @@
                 btn.addEventListener('click', function() {
                     const orderId = this.getAttribute('data-id');
                     if (confirm('Apakah Anda yakin ingin menghapus pesanan ini?')) {
-                        showNotification('Pesanan berhasil dihapus', 'success');
+                        deleteOrder(orderId);
                     }
                 });
             });
+        }
+
+        // Fungsi untuk menghapus pesanan
+        function deleteOrder(orderId) {
+            const orderIndex = sampleTransactions.findIndex(t => t.id === orderId);
+            if (orderIndex !== -1) {
+                sampleTransactions.splice(orderIndex, 1);
+                saveDataToLocalStorage();
+                loadOrdersData();
+                loadRecentOrders();
+                showNotification('Pesanan berhasil dihapus', 'success');
+            }
         }
 
         // Fungsi untuk memuat data layanan
@@ -1979,6 +2371,139 @@
                 btn.addEventListener('click', function() {
                     const serviceId = parseInt(this.getAttribute('data-id'));
                     deleteService(serviceId);
+                });
+            });
+        }
+
+        // Fungsi untuk memuat data paket harga
+        function loadPackagesData() {
+            const packagesGrid = document.getElementById('packagesGrid');
+            packagesGrid.innerHTML = '';
+            
+            if (samplePackages.length === 0) {
+                packagesGrid.innerHTML = '<div class="col-12 text-center py-4"><p>Tidak ada data paket harga</p></div>';
+                return;
+            }
+            
+            samplePackages.forEach(packageItem => {
+                const packageCard = document.createElement('div');
+                packageCard.className = 'col-md-4 mb-4';
+                
+                const featuresList = packageItem.features.map(feature => 
+                    `<li class="mb-2"><i class="fas fa-check text-success me-2"></i> ${feature}</li>`
+                ).join('');
+                
+                packageCard.innerHTML = `
+                    <div class="card h-100 text-center">
+                        <div class="card-header py-4 bg-white">
+                            <h5 class="card-title">${packageItem.name}</h5>
+                            <div class="price display-4 fw-bold">Rp ${packageItem.price.toLocaleString()}</div>
+                            <p class="text-muted">${packageItem.description}</p>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mb-4">
+                                ${featuresList}
+                            </ul>
+                            <div class="btn-group w-100">
+                                <button class="btn btn-outline-primary btn-sm edit-package" data-id="${packageItem.id}">Edit</button>
+                                <button class="btn btn-outline-${packageItem.status === 'active' ? 'warning' : 'success'} btn-sm toggle-package" data-id="${packageItem.id}">
+                                    ${packageItem.status === 'active' ? 'Nonaktifkan' : 'Aktifkan'}
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm delete-package" data-id="${packageItem.id}">Hapus</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                packagesGrid.appendChild(packageCard);
+            });
+            
+            // Add event listeners to package action buttons
+            attachPackageEventListeners();
+        }
+
+        // Attach event listeners for package actions
+        function attachPackageEventListeners() {
+            document.querySelectorAll('.edit-package').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const packageId = parseInt(this.getAttribute('data-id'));
+                    editPackage(packageId);
+                });
+            });
+            
+            document.querySelectorAll('.toggle-package').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const packageId = parseInt(this.getAttribute('data-id'));
+                    togglePackageStatus(packageId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-package').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const packageId = parseInt(this.getAttribute('data-id'));
+                    deletePackage(packageId);
+                });
+            });
+        }
+
+        // Fungsi untuk memuat data testimoni (admin)
+        function loadAdminTestimonialsData() {
+            const testimonialsTable = document.getElementById('adminTestimonialsTable');
+            testimonialsTable.innerHTML = '';
+            
+            if (sampleTestimonials.length === 0) {
+                testimonialsTable.innerHTML = '<tr><td colspan="6" class="text-center py-4">Tidak ada data testimoni</td></tr>';
+                return;
+            }
+            
+            // Urutkan testimoni berdasarkan tanggal (terbaru pertama)
+            const sortedTestimonials = [...sampleTestimonials].sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
+            
+            sortedTestimonials.forEach(testimonial => {
+                const ratingStars = '★'.repeat(testimonial.rating) + '☆'.repeat(5 - testimonial.rating);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${testimonial.name}</td>
+                    <td>${testimonial.message}</td>
+                    <td>${ratingStars}</td>
+                    <td>${formatDate(testimonial.date)}</td>
+                    <td><span class="badge bg-${testimonial.status === 'approved' ? 'success' : 'secondary'}">${testimonial.status === 'approved' ? 'Disetujui' : 'Menunggu'}</span></td>
+                    <td>
+                        <button class="btn btn-primary btn-action edit-testimonial" data-id="${testimonial.id}" title="Edit"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-${testimonial.status === 'approved' ? 'warning' : 'success'} btn-action toggle-testimonial" data-id="${testimonial.id}" title="${testimonial.status === 'approved' ? 'Tolak' : 'Setujui'}">
+                            <i class="fas fa-${testimonial.status === 'approved' ? 'times' : 'check'}"></i>
+                        </button>
+                        <button class="btn btn-danger btn-action delete-testimonial" data-id="${testimonial.id}" title="Hapus"><i class="fas fa-trash"></i></button>
+                    </td>
+                `;
+                testimonialsTable.appendChild(row);
+            });
+            
+            // Add event listeners to testimonial action buttons
+            attachTestimonialEventListeners();
+        }
+
+        // Attach event listeners for testimonial actions
+        function attachTestimonialEventListeners() {
+            document.querySelectorAll('.edit-testimonial').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const testimonialId = parseInt(this.getAttribute('data-id'));
+                    editTestimonial(testimonialId);
+                });
+            });
+            
+            document.querySelectorAll('.toggle-testimonial').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const testimonialId = parseInt(this.getAttribute('data-id'));
+                    toggleTestimonialStatus(testimonialId);
+                });
+            });
+            
+            document.querySelectorAll('.delete-testimonial').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const testimonialId = parseInt(this.getAttribute('data-id'));
+                    deleteTestimonial(testimonialId);
                 });
             });
         }
@@ -2066,57 +2591,57 @@
         function viewOrder(orderId) {
             const order = sampleTransactions.find(t => t.id === orderId);
             if (order) {
-                const modalContent = document.getElementById('orderDetailContent');
-                modalContent.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>Informasi Pesanan</h6>
-                            <p><strong>ID:</strong> ${order.id}</p>
-                            <p><strong>Pelanggan:</strong> ${order.user}</p>
-                            <p><strong>Layanan:</strong> ${order.service}</p>
-                            <p><strong>Jumlah:</strong> ${order.quantity.toLocaleString()}</p>
-                            <p><strong>Total:</strong> Rp ${order.amount.toLocaleString()}</p>
-                            <p><strong>Status:</strong> <span class="status-badge ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Detail Akun</h6>
-                            <p><strong>Akun Tujuan:</strong> ${order.accountInfo}</p>
-                            <p><strong>Catatan:</strong> ${order.notes || 'Tidak ada'}</p>
-                            <p><strong>Tanggal Pesan:</strong> ${formatDate(order.date)}</p>
-                            
-                            <div class="mt-3">
-                                <label for="orderStatusUpdate" class="form-label">Update Status</label>
-                                <select class="form-select" id="orderStatusUpdate">
-                                    <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
-                                    <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Diproses</option>
-                                    <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Selesai</option>
-                                </select>
+                // Create a simple modal to show order details
+                const modalContent = `
+                    <div class="modal fade" id="orderDetailModal" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Detail Pesanan - ${order.id}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6>Informasi Pesanan</h6>
+                                            <p><strong>ID:</strong> ${order.id}</p>
+                                            <p><strong>Pelanggan:</strong> ${order.user}</p>
+                                            <p><strong>Layanan:</strong> ${order.service}</p>
+                                            <p><strong>Jumlah:</strong> ${order.quantity.toLocaleString()}</p>
+                                            <p><strong>Total:</strong> Rp ${order.amount.toLocaleString()}</p>
+                                            <p><strong>Status:</strong> <span class="status-badge ${getStatusClass(order.status)}">${getStatusText(order.status)}</span></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h6>Detail Akun</h6>
+                                            <p><strong>Akun Tujuan:</strong> ${order.accountInfo}</p>
+                                            <p><strong>Catatan:</strong> ${order.notes || 'Tidak ada'}</p>
+                                            <p><strong>Tanggal Pesan:</strong> ${formatDate(order.date)}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 `;
                 
-                // Show the modal
-                const orderModal = new bootstrap.Modal(document.getElementById('orderModal'));
+                // Remove existing modal if any
+                const existingModal = document.getElementById('orderDetailModal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+                
+                // Add modal to body and show it
+                document.body.insertAdjacentHTML('beforeend', modalContent);
+                const orderModal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
                 orderModal.show();
                 
-                // Add event listener to update status button
-                document.getElementById('updateOrderStatusBtn').onclick = function() {
-                    const newStatus = document.getElementById('orderStatusUpdate').value;
-                    updateOrderStatus(orderId, newStatus);
-                    orderModal.hide();
-                };
-            }
-        }
-
-        // Fungsi untuk mengubah status pesanan
-        function updateOrderStatus(orderId, newStatus) {
-            const orderIndex = sampleTransactions.findIndex(t => t.id === orderId);
-            if (orderIndex !== -1) {
-                sampleTransactions[orderIndex].status = newStatus;
-                saveDataToLocalStorage();
-                loadOrdersData();
-                showNotification('Status pesanan berhasil diperbarui', 'success');
+                // Remove modal from DOM when hidden
+                document.getElementById('orderDetailModal').addEventListener('hidden.bs.modal', function() {
+                    this.remove();
+                });
             }
         }
 
@@ -2180,6 +2705,36 @@
             serviceModal.show();
         }
 
+        // Fungsi untuk menambah/edit paket harga
+        function editPackage(packageId = null) {
+            const modalTitle = document.getElementById('packageModalTitle');
+            const packageForm = document.getElementById('packageForm');
+            
+            if (packageId) {
+                // Edit mode
+                modalTitle.textContent = 'Edit Paket Harga';
+                const packageItem = samplePackages.find(p => p.id === packageId);
+                if (packageItem) {
+                    document.getElementById('packageId').value = packageItem.id;
+                    document.getElementById('packageName').value = packageItem.name;
+                    document.getElementById('packagePrice').value = packageItem.price;
+                    document.getElementById('packageQuantity').value = packageItem.quantity;
+                    document.getElementById('packageDescription').value = packageItem.description;
+                    document.getElementById('packageFeatures').value = packageItem.features.join(', ');
+                    document.getElementById('packageStatus').checked = packageItem.status === 'active';
+                }
+            } else {
+                // Add mode
+                modalTitle.textContent = 'Tambah Paket Harga';
+                packageForm.reset();
+                document.getElementById('packageId').value = '';
+                document.getElementById('packageStatus').checked = true;
+            }
+            
+            const packageModal = new bootstrap.Modal(document.getElementById('packageModal'));
+            packageModal.show();
+        }
+
         // Fungsi untuk mengubah status pengguna
         function toggleUserStatus(userId) {
             const userIndex = sampleUsers.findIndex(u => u.id === userId);
@@ -2198,7 +2753,31 @@
                 sampleServices[serviceIndex].status = sampleServices[serviceIndex].status === 'active' ? 'inactive' : 'active';
                 saveDataToLocalStorage();
                 loadServicesData();
+                loadPublicServices();
                 showNotification('Status layanan berhasil diubah', 'success');
+            }
+        }
+
+        // Fungsi untuk mengubah status paket
+        function togglePackageStatus(packageId) {
+            const packageIndex = samplePackages.findIndex(p => p.id === packageId);
+            if (packageIndex !== -1) {
+                samplePackages[packageIndex].status = samplePackages[packageIndex].status === 'active' ? 'inactive' : 'active';
+                saveDataToLocalStorage();
+                loadPackagesData();
+                showNotification('Status paket berhasil diubah', 'success');
+            }
+        }
+
+        // Fungsi untuk mengubah status testimoni
+        function toggleTestimonialStatus(testimonialId) {
+            const testimonialIndex = sampleTestimonials.findIndex(t => t.id === testimonialId);
+            if (testimonialIndex !== -1) {
+                sampleTestimonials[testimonialIndex].status = sampleTestimonials[testimonialIndex].status === 'approved' ? 'pending' : 'approved';
+                saveDataToLocalStorage();
+                loadAdminTestimonialsData();
+                loadPublicTestimonials();
+                showNotification('Status testimoni berhasil diubah', 'success');
             }
         }
 
@@ -2223,7 +2802,35 @@
                     sampleServices.splice(serviceIndex, 1);
                     saveDataToLocalStorage();
                     loadServicesData();
+                    loadPublicServices();
                     showNotification('Layanan berhasil dihapus', 'success');
+                }
+            }
+        }
+
+        // Fungsi untuk menghapus paket
+        function deletePackage(packageId) {
+            if (confirm('Apakah Anda yakin ingin menghapus paket ini?')) {
+                const packageIndex = samplePackages.findIndex(p => p.id === packageId);
+                if (packageIndex !== -1) {
+                    samplePackages.splice(packageIndex, 1);
+                    saveDataToLocalStorage();
+                    loadPackagesData();
+                    showNotification('Paket berhasil dihapus', 'success');
+                }
+            }
+        }
+
+        // Fungsi untuk menghapus testimoni
+        function deleteTestimonial(testimonialId) {
+            if (confirm('Apakah Anda yakin ingin menghapus testimoni ini?')) {
+                const testimonialIndex = sampleTestimonials.findIndex(t => t.id === testimonialId);
+                if (testimonialIndex !== -1) {
+                    sampleTestimonials.splice(testimonialIndex, 1);
+                    saveDataToLocalStorage();
+                    loadAdminTestimonialsData();
+                    loadPublicTestimonials();
+                    showNotification('Testimoni berhasil dihapus', 'success');
                 }
             }
         }
@@ -2274,8 +2881,57 @@
             loadPublicServices();
             
             // Close modal and show notification
-            bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
+            safeHideModal('serviceModal');
             showNotification(`Layanan ${serviceName} berhasil ${serviceId ? 'diperbarui' : 'ditambahkan'}`, 'success');
+        }
+
+        // Fungsi untuk menyimpan paket (baru atau edit)
+        function savePackage() {
+            const packageId = document.getElementById('packageId').value;
+            const packageName = document.getElementById('packageName').value;
+            const packagePrice = parseInt(document.getElementById('packagePrice').value);
+            const packageQuantity = parseInt(document.getElementById('packageQuantity').value);
+            const packageDescription = document.getElementById('packageDescription').value;
+            const packageFeatures = document.getElementById('packageFeatures').value.split(',').map(f => f.trim());
+            const packageStatus = document.getElementById('packageStatus').checked ? 'active' : 'inactive';
+            
+            if (packageId) {
+                // Edit mode - update existing package
+                const packageIndex = samplePackages.findIndex(p => p.id == packageId);
+                if (packageIndex !== -1) {
+                    samplePackages[packageIndex] = {
+                        id: parseInt(packageId),
+                        name: packageName,
+                        price: packagePrice,
+                        quantity: packageQuantity,
+                        description: packageDescription,
+                        features: packageFeatures,
+                        status: packageStatus
+                    };
+                }
+            } else {
+                // Add mode - create new package
+                const newId = samplePackages.length > 0 ? Math.max(...samplePackages.map(p => p.id)) + 1 : 1;
+                samplePackages.push({
+                    id: newId,
+                    name: packageName,
+                    price: packagePrice,
+                    quantity: packageQuantity,
+                    description: packageDescription,
+                    features: packageFeatures,
+                    status: packageStatus
+                });
+            }
+            
+            // Save to localStorage
+            saveDataToLocalStorage();
+            
+            // Reload packages data
+            loadPackagesData();
+            
+            // Close modal and show notification
+            safeHideModal('packageModal');
+            showNotification(`Paket ${packageName} berhasil ${packageId ? 'diperbarui' : 'ditambahkan'}`, 'success');
         }
 
         // Fungsi untuk menampilkan modal pemesanan
@@ -2307,12 +2963,17 @@
             // Event listener untuk tombol konfirmasi
             document.getElementById('confirmOrderBtn').onclick = function() {
                 createOrder(serviceName, pricePer1000, parseInt(orderQuantity.value), document.getElementById('orderAccount').value, document.getElementById('orderNotes').value);
-                orderModal.hide();
+                safeHideModal('orderModal');
             };
             
             // Reset form
             document.getElementById('orderAccount').value = '';
             document.getElementById('orderNotes').value = '';
+            
+            // Tambahkan event listener untuk membersihkan backdrop ketika modal ditutup
+            document.getElementById('orderModal').addEventListener('hidden.bs.modal', function() {
+                cleanupModalBackdrops();
+            });
             
             // Tampilkan modal
             orderModal.show();
@@ -2361,7 +3022,36 @@
             });
             saveDataToLocalStorage();
             
+            // Tampilkan modal pembayaran
+            showPaymentModal(newOrder);
+            
             showNotification(`Pesanan ${serviceName} berhasil dibuat!`, 'success');
+        }
+
+        // Fungsi untuk menampilkan modal pembayaran
+        function showPaymentModal(order) {
+            const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+            
+            // Isi data pesanan
+            document.getElementById('paymentOrderId').textContent = order.id;
+            document.getElementById('paymentService').textContent = order.service;
+            document.getElementById('paymentQuantity').textContent = order.quantity.toLocaleString();
+            document.getElementById('paymentAmount').textContent = `Rp ${order.amount.toLocaleString()}`;
+            
+            // Setup tombol WhatsApp
+            const whatsappBtn = document.getElementById('whatsappPaymentBtn');
+            const message = `Halo, saya ingin membayar pesanan FollowBoost dengan ID: ${order.id} untuk layanan ${order.service} sebesar Rp ${order.amount.toLocaleString()}.`;
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            whatsappBtn.setAttribute('href', whatsappUrl);
+            
+            // Setup tombol lihat profil
+            document.getElementById('viewProfileBtn').onclick = function() {
+                safeHideModal('paymentModal');
+                showUserProfile();
+            };
+            
+            // Tampilkan modal
+            paymentModal.show();
         }
 
         // Fungsi untuk memuat layanan di halaman public
@@ -2369,51 +3059,51 @@
             const servicesContainer = document.getElementById('servicesContainer');
             servicesContainer.innerHTML = '';
             
-            // Group services by platform
-            const servicesByPlatform = {};
-            sampleServices.forEach(service => {
-                if (service.status !== 'active') return;
+            // Filter layanan yang aktif
+            const activeServices = sampleServices.filter(service => service.status === 'active');
+
+            if (activeServices.length === 0) {
+                servicesContainer.innerHTML = '<div class="col-12 text-center"><p>Belum ada layanan yang tersedia.</p></div>';
+                return;
+            }
+
+            activeServices.forEach(service => {
+                const serviceCard = document.createElement('div');
+                serviceCard.className = 'col-md-4 mb-4';
                 
-                if (!servicesByPlatform[service.platform]) {
-                    servicesByPlatform[service.platform] = [];
+                // Tentukan ikon berdasarkan platform
+                let iconClass;
+                switch(service.platform) {
+                    case 'instagram': iconClass = 'fab fa-instagram'; break;
+                    case 'tiktok': iconClass = 'fab fa-tiktok'; break;
+                    case 'youtube': iconClass = 'fab fa-youtube'; break;
+                    case 'twitter': iconClass = 'fab fa-twitter'; break;
+                    case 'facebook': iconClass = 'fab fa-facebook'; break;
+                    default: iconClass = 'fas fa-share-alt';
                 }
-                servicesByPlatform[service.platform].push(service);
-            });
-            
-            // Create service cards for each platform
-            for (const platform in servicesByPlatform) {
-                const platformServices = servicesByPlatform[platform];
-                
-                platformServices.forEach(service => {
-                    const serviceCard = document.createElement('div');
-                    serviceCard.className = 'col-md-4 mb-4';
-                    
-                    let badge = '';
-                    if (service.id <= 4) { // Mark first 4 services as popular
-                        badge = '<span class="badge bg-success position-absolute top-0 end-0 m-2">Populer</span>';
-                    }
-                    
-                    serviceCard.innerHTML = `
-                        <div class="service-card card h-100 position-relative">
-                            ${badge}
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon ${service.platform}-bg mx-auto">
-                                    <i class="fab fa-${service.platform}"></i>
-                                </div>
-                                <h5 class="card-title">${service.name}</h5>
-                                <p class="card-text text-muted">${service.description}</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="${service.name}" data-price="${service.pricePer1000}">Pesan Sekarang</button>
-                                </div>
+
+                serviceCard.innerHTML = `
+                    <div class="service-card card h-100">
+                        <div class="card-body text-center p-4">
+                            <div class="service-icon ${service.platform}-bg mx-auto">
+                                <i class="${iconClass}"></i>
+                            </div>
+                            <h5 class="card-title">${service.name}</h5>
+                            <p class="card-text text-muted">${service.description}</p>
+                            <div class="mb-3">
+                                <strong>Rp ${service.pricePer1000.toLocaleString()} / 1000</strong>
+                            </div>
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-order" data-service="${service.name}" data-price="${service.pricePer1000}">Pesan Sekarang</button>
                             </div>
                         </div>
-                    `;
-                    
-                    servicesContainer.appendChild(serviceCard);
-                });
-            }
-            
-            // Add event listeners to order buttons
+                    </div>
+                `;
+                
+                servicesContainer.appendChild(serviceCard);
+            });
+
+            // Event listener untuk tombol pesan
             document.querySelectorAll('.btn-order').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const serviceName = this.getAttribute('data-service');
@@ -2423,12 +3113,230 @@
             });
         }
 
+        // Fungsi untuk memuat testimoni di halaman public
+        function loadPublicTestimonials() {
+            const testimonialsList = document.getElementById('testimonialsList');
+            testimonialsList.innerHTML = '';
+            
+            // Filter testimoni yang disetujui
+            const approvedTestimonials = sampleTestimonials.filter(testimonial => testimonial.status === 'approved');
+            
+            if (approvedTestimonials.length === 0) {
+                testimonialsList.innerHTML = '<div class="col-12 text-center"><p>Belum ada testimoni.</p></div>';
+                return;
+            }
+
+            // Urutkan testimoni berdasarkan rating (tertinggi pertama)
+            const sortedTestimonials = [...approvedTestimonials].sort((a, b) => b.rating - a.rating);
+            
+            sortedTestimonials.forEach(testimonial => {
+                const testimonialItem = document.createElement('div');
+                testimonialItem.className = 'col-md-6 mb-4';
+                
+                const ratingStars = '★'.repeat(testimonial.rating) + '☆'.repeat(5 - testimonial.rating);
+                
+                testimonialItem.innerHTML = `
+                    <div class="testimonial-item">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="testimonial-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">${testimonial.name}</h6>
+                                <div class="text-warning">
+                                    ${ratingStars}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-text">"${testimonial.message}"</p>
+                        <small class="text-muted">${formatDate(testimonial.date)}</small>
+                    </div>
+                `;
+                
+                testimonialsList.appendChild(testimonialItem);
+            });
+        }
+
+        // Fungsi untuk menampilkan profil user
+        function showUserProfile() {
+            // Sembunyikan section lain
+            document.getElementById('services').style.display = 'none';
+            document.getElementById('testimonials').style.display = 'none';
+            
+            // Tampilkan section profil user
+            document.getElementById('user-profile').style.display = 'block';
+            
+            // Scroll ke atas
+            window.scrollTo(0, 0);
+            
+            // Load data profil
+            loadUserProfileData();
+        }
+
+        // Fungsi untuk memuat data profil user
+        function loadUserProfileData() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            // Isi data profil
+            document.getElementById('profileUserName').textContent = currentUser.name;
+            document.getElementById('profileUserEmail').textContent = currentUser.email;
+            
+            // Isi data pesanan user
+            loadUserOrders(currentUser.name);
+            
+            // Tampilkan form testimoni
+            document.getElementById('testimonialFormContainer').style.display = 'block';
+            document.getElementById('testimonialName').value = currentUser.name;
+        }
+
+        // Fungsi untuk memuat pesanan user
+        function loadUserOrders(userName) {
+            const userOrdersTable = document.getElementById('userOrdersTable');
+            const noOrdersMessage = document.getElementById('noOrdersMessage');
+            userOrdersTable.innerHTML = '';
+            
+            // Filter pesanan berdasarkan user
+            const userOrders = sampleTransactions.filter(t => t.user === userName);
+            
+            if (userOrders.length === 0) {
+                userOrdersTable.innerHTML = '';
+                noOrdersMessage.style.display = 'block';
+                return;
+            }
+            
+            noOrdersMessage.style.display = 'none';
+            
+            // Tampilkan pesanan
+            userOrders.forEach(order => {
+                const statusClass = getStatusClass(order.status);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${order.id}</td>
+                    <td>${order.service}</td>
+                    <td>${order.quantity.toLocaleString()}</td>
+                    <td>Rp ${order.amount.toLocaleString()}</td>
+                    <td><span class="status-badge ${statusClass}">${getStatusText(order.status)}</span></td>
+                    <td>${formatDate(order.date)}</td>
+                    <td>
+                        <button class="btn btn-info btn-action view-user-order" data-id="${order.id}" title="Lihat Detail">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                userOrdersTable.appendChild(row);
+            });
+            
+            // Add event listeners to view buttons
+            document.querySelectorAll('.view-user-order').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-id');
+                    viewOrder(orderId);
+                });
+            });
+        }
+
+        // Fungsi untuk menampilkan modal edit profil user
+        function showEditUserProfile() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            // Isi form dengan data user saat ini
+            document.getElementById('userProfileName').value = currentUser.name;
+            document.getElementById('userProfileEmail').value = currentUser.email;
+            document.getElementById('userProfilePhone').value = currentUser.phone;
+            document.getElementById('userProfilePassword').value = '';
+            
+            // Tampilkan modal
+            const userProfileModal = new bootstrap.Modal(document.getElementById('userProfileModal'));
+            userProfileModal.show();
+        }
+
+        // Fungsi untuk menyimpan perubahan profil user
+        function saveUserProfile() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) return;
+            
+            const name = document.getElementById('userProfileName').value;
+            const email = document.getElementById('userProfileEmail').value;
+            const phone = document.getElementById('userProfilePhone').value;
+            const password = document.getElementById('userProfilePassword').value;
+            
+            // Cek apakah email sudah digunakan oleh user lain
+            const emailExists = sampleUsers.some(u => u.email === email && u.id !== currentUser.id);
+            if (emailExists) {
+                showNotification('Email sudah digunakan oleh user lain!', 'danger');
+                return;
+            }
+            
+            // Update data user
+            const userIndex = sampleUsers.findIndex(u => u.id === currentUser.id);
+            if (userIndex !== -1) {
+                sampleUsers[userIndex].name = name;
+                sampleUsers[userIndex].email = email;
+                sampleUsers[userIndex].phone = phone;
+                
+                // Update password jika diisi
+                if (password) {
+                    sampleUsers[userIndex].password = password;
+                }
+                
+                // Update current user di localStorage
+                const updatedUser = sampleUsers[userIndex];
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                
+                // Update UI
+                updateUIForLoggedInUser(updatedUser);
+                
+                // Simpan perubahan
+                saveDataToLocalStorage();
+                
+                // Tutup modal
+                safeHideModal('userProfileModal');
+                
+                showNotification('Profil berhasil diperbarui!', 'success');
+            }
+        }
+
+        // Fungsi untuk menambah testimoni
+        function addTestimonial() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                showNotification('Silakan login terlebih dahulu untuk memberikan testimoni.', 'warning');
+                return false;
+            }
+            
+            const name = document.getElementById('testimonialName').value;
+            const message = document.getElementById('testimonialMessage').value;
+            const rating = parseInt(document.getElementById('testimonialRating').value);
+            
+            const newTestimonial = {
+                id: sampleTestimonials.length > 0 ? Math.max(...sampleTestimonials.map(t => t.id)) + 1 : 1,
+                name: name,
+                message: message,
+                rating: rating,
+                date: new Date().toISOString().split('T')[0],
+                status: 'pending'
+            };
+            
+            sampleTestimonials.push(newTestimonial);
+            saveDataToLocalStorage();
+            
+            // Reset form
+            document.getElementById('testimonialForm').reset();
+            document.getElementById('testimonialName').value = currentUser.name;
+            
+            showNotification('Testimoni berhasil dikirim! Menunggu persetujuan admin.', 'success');
+            return true;
+        }
+
         // Fungsi utilitas
         function getStatusClass(status) {
             switch(status) {
                 case 'completed': return 'status-completed';
                 case 'pending': return 'status-pending';
                 case 'processing': return 'status-processing';
+                case 'cancelled': return 'status-cancelled';
                 default: return '';
             }
         }
@@ -2438,6 +3346,7 @@
                 case 'completed': return 'Selesai';
                 case 'pending': return 'Pending';
                 case 'processing': return 'Diproses';
+                case 'cancelled': return 'Dibatalkan';
                 default: return status;
             }
         }
@@ -2476,6 +3385,8 @@
                     'users': 'Manajemen Pengguna',
                     'orders': 'Manajemen Pesanan',
                     'services': 'Manajemen Layanan',
+                    'packages': 'Paket Harga',
+                    'testimonials': 'Testimoni',
                     'research': 'Riset Pengguna',
                     'reports': 'Laporan',
                     'settings': 'Pengaturan Sistem',
@@ -2497,6 +3408,12 @@
                         break;
                     case 'services':
                         loadServicesData();
+                        break;
+                    case 'packages':
+                        loadPackagesData();
+                        break;
+                    case 'testimonials':
+                        loadAdminTestimonialsData();
                         break;
                     case 'research':
                         loadUserResearchData();
@@ -2543,6 +3460,9 @@
 
         // Event listeners saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
+            // Bersihkan modal backdrops yang mungkin tertinggal
+            cleanupModalBackdrops();
+            
             // Cek apakah user sudah login
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
@@ -2558,6 +3478,9 @@
             
             // Muat layanan di halaman public
             loadPublicServices();
+            
+            // Muat testimoni di halaman public
+            loadPublicTestimonials();
             
             // Setup tombol pemesanan untuk paket harga
             document.querySelectorAll('.btn-order').forEach(btn => {
@@ -2595,16 +3518,28 @@
                 editService();
             });
             
-            // Perbaikan: Ganti event listener untuk saveServiceBtn
+            document.getElementById('addPackageBtn').addEventListener('click', function() {
+                editPackage();
+            });
+            
+            // Setup save buttons
             document.getElementById('saveServiceBtn').addEventListener('click', saveService);
+            
+            document.getElementById('savePackageBtn').addEventListener('click', savePackage);
             
             document.getElementById('refreshOrdersBtn').addEventListener('click', function() {
                 loadOrdersData();
+                loadRecentOrders();
                 showNotification('Data pesanan diperbarui', 'info');
             });
             
             document.getElementById('exportOrdersBtn').addEventListener('click', function() {
                 showNotification('Data pesanan berhasil diexport', 'success');
+            });
+            
+            document.getElementById('refreshTestimonialsBtn').addEventListener('click', function() {
+                loadAdminTestimonialsData();
+                showNotification('Data testimoni diperbarui', 'info');
             });
             
             document.getElementById('generateReportBtn').addEventListener('click', function() {
@@ -2645,6 +3580,12 @@
                 showNotification('Profil berhasil diperbarui', 'success');
             });
             
+            // Setup testimonial form
+            document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addTestimonial();
+            });
+            
             // Setup logout buttons
             document.getElementById('adminLogoutBtn').addEventListener('click', logoutAdmin);
             document.getElementById('adminLogoutDropdown').addEventListener('click', logoutAdmin);
@@ -2655,10 +3596,7 @@
                 const email = document.getElementById('loginEmail').value;
                 const password = document.getElementById('loginPassword').value;
                 
-                if (loginUser(email, password)) {
-                    const loginModal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
-                    loginModal.hide();
-                }
+                loginUser(email, password);
             });
             
             // Setup register form
@@ -2675,10 +3613,18 @@
                     return;
                 }
                 
-                if (registerUser(name, email, phone, password)) {
-                    const registerModal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
-                    registerModal.hide();
-                }
+                registerUser(name, email, phone, password);
+            });
+            
+            // Setup profil user
+            document.getElementById('editProfileBtn').addEventListener('click', showEditUserProfile);
+            document.getElementById('saveUserProfileBtn').addEventListener('click', saveUserProfile);
+            
+            // Tambahkan event listener untuk semua modal agar membersihkan backdrop ketika ditutup
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', function() {
+                    cleanupModalBackdrops();
+                });
             });
             
             // Simpan data awal ke localStorage jika belum ada
@@ -2714,10 +3660,12 @@
             
             updateUIForLoggedInUser(newUser);
             
+            safeHideModal('registerModal');
+            
             return true;
         }
 
-        // Fungsi untuk update UI setelah login user biasa (from public website)
+        // Fungsi untuk update UI setelah login user biasa
         function updateUIForLoggedInUser(user) {
             const userMenu = document.getElementById('userMenu');
             userMenu.innerHTML = `
@@ -2730,9 +3678,7 @@
                 </button>
             `;
             
-            document.getElementById('userProfileBtn').addEventListener('click', function() {
-                showNotification('Fitur profil akan segera tersedia!', 'info');
-            });
+            document.getElementById('userProfileBtn').addEventListener('click', showUserProfile);
             
             document.getElementById('logoutUserBtn').addEventListener('click', function() {
                 localStorage.removeItem('currentUser');
