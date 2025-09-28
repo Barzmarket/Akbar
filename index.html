@@ -442,103 +442,8 @@
         <section id="services" class="py-5">
             <div class="container">
                 <h2 class="section-title text-center">Layanan Kami</h2>
-                <div class="row">
-                    <!-- Instagram Followers -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100 position-relative">
-                            <span class="badge bg-success position-absolute top-0 end-0 m-2">Populer</span>
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon instagram-bg mx-auto">
-                                    <i class="fab fa-instagram"></i>
-                                </div>
-                                <h5 class="card-title">Instagram Followers</h5>
-                                <p class="card-text text-muted">Tambah followers Instagram dengan cepat dan aman.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="Instagram Followers" data-price="50000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- TikTok Followers -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100">
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon tiktok-bg mx-auto">
-                                    <i class="fab fa-tiktok"></i>
-                                </div>
-                                <h5 class="card-title">TikTok Followers</h5>
-                                <p class="card-text text-muted">Tingkatkan followers TikTok Anda dengan mudah.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="TikTok Followers" data-price="45000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- YouTube Subscribers -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100">
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon youtube-bg mx-auto">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <h5 class="card-title">YouTube Subscribers</h5>
-                                <p class="card-text text-muted">Tambah subscribers YouTube channel Anda.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="YouTube Subscribers" data-price="75000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Instagram Likes -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100">
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon instagram-bg mx-auto">
-                                    <i class="fab fa-instagram"></i>
-                                </div>
-                                <h5 class="card-title">Instagram Likes</h5>
-                                <p class="card-text text-muted">Tambah likes pada postingan Instagram Anda.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="Instagram Likes" data-price="25000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- TikTok Views -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100">
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon tiktok-bg mx-auto">
-                                    <i class="fab fa-tiktok"></i>
-                                </div>
-                                <h5 class="card-title">TikTok Views</h5>
-                                <p class="card-text text-muted">Tingkatkan views video TikTok Anda.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="TikTok Views" data-price="30000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- YouTube Views -->
-                    <div class="col-md-4 mb-4">
-                        <div class="service-card card h-100">
-                            <div class="card-body text-center p-4">
-                                <div class="service-icon youtube-bg mx-auto">
-                                    <i class="fab fa-youtube"></i>
-                                </div>
-                                <h5 class="card-title">YouTube Views</h5>
-                                <p class="card-text text-muted">Tingkatkan views video YouTube Anda.</p>
-                                <div class="d-grid">
-                                    <button class="btn btn-primary btn-order" data-service="YouTube Views" data-price="40000">Pesan Sekarang</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="servicesContainer">
+                    <!-- Layanan akan dimuat secara dinamis -->
                 </div>
             </div>
         </section>
@@ -735,7 +640,417 @@
 
     <!-- Admin Dashboard (Hidden by default) -->
     <div class="admin-dashboard" id="adminDashboard">
-        <!-- ... (kode admin dashboard tetap sama) ... -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-2 sidebar">
+                    <div class="sidebar-header">
+                        <h4><i class="fas fa-rocket me-2"></i>FollowBoost</h4>
+                        <p class="mb-0">Admin Panel</p>
+                    </div>
+                    <ul class="sidebar-menu">
+                        <li><a href="#" class="active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="#" data-page="users"><i class="fas fa-users"></i> Manajemen Pengguna</a></li>
+                        <li><a href="#" data-page="orders"><i class="fas fa-shopping-cart"></i> Manajemen Pesanan</a></li>
+                        <li><a href="#" data-page="services"><i class="fas fa-cube"></i> Manajemen Layanan</a></li>
+                        <li><a href="#" data-page="research"><i class="fas fa-chart-line"></i> Riset Pengguna</a></li>
+                        <li><a href="#" data-page="reports"><i class="fas fa-file-alt"></i> Laporan</a></li>
+                        <li><a href="#" data-page="settings"><i class="fas fa-cog"></i> Pengaturan</a></li>
+                        <li><a href="#" id="adminLogoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="col-md-10 main-content">
+                    <!-- Dashboard Header -->
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2 id="pageTitle">Dashboard Admin</h2>
+                        <div class="d-flex align-items-center">
+                            <span class="me-3">Halo, <strong id="adminName">Admin</strong></span>
+                            <div class="dropdown">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user-cog"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" data-page="profile"><i class="fas fa-user me-2"></i> Profil Saya</a></li>
+                                    <li><a class="dropdown-item" href="#" data-page="settings"><i class="fas fa-cog me-2"></i> Pengaturan</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" id="adminLogoutDropdown"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dashboard Section -->
+                    <div class="page-section active" id="dashboard-section">
+                        <!-- Stats Cards -->
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="dashboard-card card-revenue">
+                                    <i class="fas fa-money-bill-wave fa-2x"></i>
+                                    <div class="stats-number" id="totalRevenue">Rp 0</div>
+                                    <p>Total Pendapatan</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="dashboard-card card-users">
+                                    <i class="fas fa-users fa-2x"></i>
+                                    <div class="stats-number" id="totalUsers">0</div>
+                                    <p>Total Pengguna</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="dashboard-card card-orders">
+                                    <i class="fas fa-shopping-cart fa-2x"></i>
+                                    <div class="stats-number" id="totalOrders">0</div>
+                                    <p>Total Pesanan</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="dashboard-card card-pending">
+                                    <i class="fas fa-clock fa-2x"></i>
+                                    <div class="stats-number" id="pendingOrders">0</div>
+                                    <p>Pesanan Pending</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Charts Row -->
+                        <div class="row mt-4">
+                            <div class="col-md-8">
+                                <div class="chart-container">
+                                    <h5>Pendapatan Bulanan</h5>
+                                    <canvas id="revenueChart" height="250"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chart-container">
+                                    <h5>Distribusi Layanan</h5>
+                                    <canvas id="serviceChart" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="chart-container">
+                                    <h5>Aktivitas Terbaru</h5>
+                                    <div id="recentActivity">
+                                        <!-- Activity items will be loaded here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Management Section -->
+                    <div class="page-section" id="users-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Manajemen Pengguna</h4>
+                            <button class="btn btn-primary" id="addUserBtn"><i class="fas fa-plus me-1"></i> Tambah Pengguna</button>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Telepon</th>
+                                        <th>Bergabung</th>
+                                        <th>Status</th>
+                                        <th>Role</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTable">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Management Section -->
+                    <div class="page-section" id="orders-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Manajemen Pesanan</h4>
+                            <div>
+                                <button class="btn btn-primary me-2" id="refreshOrdersBtn"><i class="fas fa-sync-alt me-1"></i> Refresh</button>
+                                <button class="btn btn-success" id="exportOrdersBtn"><i class="fas fa-download me-1"></i> Export</button>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>ID Transaksi</th>
+                                        <th>Pelanggan</th>
+                                        <th>Layanan</th>
+                                        <th>Jumlah</th>
+                                        <th>Total</th>
+                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTable">
+                                    <!-- Data will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Services Management Section -->
+                    <div class="page-section" id="services-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Manajemen Layanan</h4>
+                            <button class="btn btn-primary" id="addServiceBtn"><i class="fas fa-plus me-1"></i> Tambah Layanan</button>
+                        </div>
+                        
+                        <div class="row" id="servicesGrid">
+                            <!-- Services cards will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <!-- User Research Section -->
+                    <div class="page-section" id="research-section">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4>Riset Pengguna</h4>
+                            <div>
+                                <button class="btn btn-primary me-2" id="generateReportBtn"><i class="fas fa-chart-bar me-1"></i> Generate Report</button>
+                                <button class="btn btn-success" id="exportResearchBtn"><i class="fas fa-download me-1"></i> Export Data</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Research Filters -->
+                        <div class="research-filters">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="researchDateRange">Rentang Tanggal</label>
+                                    <input type="text" class="form-control" id="researchDateRange" placeholder="Pilih rentang tanggal">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="researchService">Layanan</label>
+                                    <select class="form-select" id="researchService">
+                                        <option value="">Semua Layanan</option>
+                                        <!-- Options will be populated by JavaScript -->
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="researchStatus">Status</label>
+                                    <select class="form-select" id="researchStatus">
+                                        <option value="">Semua Status</option>
+                                        <option value="completed">Selesai</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Diproses</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="researchAction">&nbsp;</label>
+                                    <button class="btn btn-primary w-100" id="applyResearchFilters">Terapkan Filter</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Research Metrics -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="avgOrderValue">Rp 0</div>
+                                    <div class="metric-label">Rata-rata Nilai Pesanan</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="userRetentionRate">0%</div>
+                                    <div class="metric-label">Tingkat Retensi Pengguna</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="popularService">-</div>
+                                    <div class="metric-label">Layanan Paling Populer</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="metric-card">
+                                    <div class="metric-value" id="completionRate">0%</div>
+                                    <div class="metric-label">Tingkat Penyelesaian</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Research Charts -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Perilaku Pengguna Berdasarkan Waktu</h5>
+                                    <canvas id="userBehaviorChart" height="250"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Distribusi Demografi Pengguna</h5>
+                                    <canvas id="userDemographicChart" height="250"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- User Activity Log -->
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="chart-container">
+                                    <h5>Log Aktivitas Pengguna</h5>
+                                    <div id="userActivityLog">
+                                        <!-- Activity log will be populated by JavaScript -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reports Section -->
+                    <div class="page-section" id="reports-section">
+                        <h4>Laporan</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Laporan Pendapatan</h5>
+                                    <canvas id="reportsChart" height="300"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Statistik Pengguna</h5>
+                                    <div id="reportsStats">
+                                        <div class="metric-card">
+                                            <div class="metric-value" id="monthlyRevenue">Rp 0</div>
+                                            <div class="metric-label">Pendapatan Bulan Ini</div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-value" id="newUsersThisMonth">0</div>
+                                            <div class="metric-label">Pengguna Baru Bulan Ini</div>
+                                        </div>
+                                        <div class="metric-card">
+                                            <div class="metric-value" id="ordersThisMonth">0</div>
+                                            <div class="metric-label">Pesanan Bulan Ini</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div class="page-section" id="settings-section">
+                        <h4>Pengaturan Sistem</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Pengaturan Umum</h5>
+                                    <form id="generalSettings">
+                                        <div class="mb-3">
+                                            <label for="siteName" class="form-label">Nama Situs</label>
+                                            <input type="text" class="form-control" id="siteName" value="FollowBoost">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="adminEmail" class="form-label">Email Admin</label>
+                                            <input type="email" class="form-control" id="adminEmail" value="admin@followboost.com">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="currency" class="form-label">Mata Uang</label>
+                                            <select class="form-select" id="currency">
+                                                <option value="IDR" selected>Rupiah (IDR)</option>
+                                                <option value="USD">Dollar (USD)</option>
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="chart-container">
+                                    <h5>Pengaturan Keamanan</h5>
+                                    <form id="securitySettings">
+                                        <div class="mb-3">
+                                            <label for="maintenanceMode" class="form-label">Mode Maintenance</label>
+                                            <select class="form-select" id="maintenanceMode">
+                                                <option value="false" selected>Aktif</option>
+                                                <option value="true">Maintenance</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="maxLoginAttempts" class="form-label">Maksimal Percobaan Login</label>
+                                            <input type="number" class="form-control" id="maxLoginAttempts" value="5">
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="enable2FA">
+                                            <label class="form-check-label" for="enable2FA">Aktifkan Two-Factor Authentication</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Section -->
+                    <div class="page-section" id="profile-section">
+                        <h4>Profil Saya</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="chart-container text-center">
+                                    <div class="activity-avatar mx-auto mb-3" style="width: 100px; height: 100px;">
+                                        <i class="fas fa-user fa-3x"></i>
+                                    </div>
+                                    <h5 id="profileUserName">Admin User</h5>
+                                    <p class="text-muted" id="profileUserRole">Administrator</p>
+                                    <button class="btn btn-outline-primary btn-sm">Ubah Foto</button>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="chart-container">
+                                    <h5>Informasi Profil</h5>
+                                    <form id="profileForm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="profileName" class="form-label">Nama Lengkap</label>
+                                                    <input type="text" class="form-control" id="profileName" value="Admin User">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="profileEmail" class="form-label">Email</label>
+                                                    <input type="email" class="form-control" id="profileEmail" value="admin@example.com">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="profilePhone" class="form-label">Telepon</label>
+                                                    <input type="text" class="form-control" id="profilePhone" value="08123456789">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="profileJoinDate" class="form-label">Bergabung Sejak</label>
+                                                    <input type="text" class="form-control" id="profileJoinDate" value="2023-10-01" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Perbarui Profil</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modals -->
@@ -934,8 +1249,23 @@
                                 <option value="instagram">Instagram</option>
                                 <option value="tiktok">TikTok</option>
                                 <option value="youtube">YouTube</option>
-                                <option value="twitter">Twitter</option>
                                 <option value="facebook">Facebook</option>
+                                <option value="twitter">Twitter</option>
+                                <option value="telegram">Telegram</option>
+                                <option value="spotify">Spotify</option>
+                                <option value="soundcloud">SoundCloud</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="serviceType" class="form-label">Jenis Layanan</label>
+                            <select class="form-select" id="serviceType" required>
+                                <option value="followers">Followers</option>
+                                <option value="likes">Likes</option>
+                                <option value="views">Views</option>
+                                <option value="live">Live Views</option>
+                                <option value="comments">Comments</option>
+                                <option value="shares">Shares</option>
+                                <option value="monetization">Monetisasi Konten</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -1000,12 +1330,35 @@
         ];
 
         let sampleServices = JSON.parse(localStorage.getItem('followBoostServices')) || [
-            { id: 1, name: "Instagram Followers", platform: "instagram", pricePer1000: 50000, description: "Tambah followers Instagram dengan cepat dan aman", status: "active" },
-            { id: 2, name: "TikTok Followers", platform: "tiktok", pricePer1000: 45000, description: "Tingkatkan followers TikTok Anda dengan mudah", status: "active" },
-            { id: 3, name: "YouTube Subscribers", platform: "youtube", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
-            { id: 4, name: "Instagram Likes", platform: "instagram", pricePer1000: 25000, description: "Tambah likes pada postingan Instagram Anda", status: "active" },
-            { id: 5, name: "TikTok Views", platform: "tiktok", pricePer1000: 30000, description: "Tingkatkan views video TikTok Anda", status: "active" },
-            { id: 6, name: "YouTube Views", platform: "youtube", pricePer1000: 40000, description: "Tingkatkan views video YouTube Anda", status: "active" }
+            // Instagram Services
+            { id: 1, name: "Instagram Followers", platform: "instagram", type: "followers", pricePer1000: 50000, description: "Tambah followers Instagram dengan cepat dan aman", status: "active" },
+            { id: 2, name: "Instagram Likes", platform: "instagram", type: "likes", pricePer1000: 25000, description: "Tambah likes pada postingan Instagram Anda", status: "active" },
+            { id: 3, name: "Instagram Views", platform: "instagram", type: "views", pricePer1000: 20000, description: "Tingkatkan views video Instagram Anda", status: "active" },
+            { id: 4, name: "Instagram Live Views", platform: "instagram", type: "live", pricePer1000: 60000, description: "Tambah viewers saat live di Instagram", status: "active" },
+            
+            // TikTok Services
+            { id: 5, name: "TikTok Followers", platform: "tiktok", type: "followers", pricePer1000: 45000, description: "Tingkatkan followers TikTok Anda dengan mudah", status: "active" },
+            { id: 6, name: "TikTok Likes", platform: "tiktok", type: "likes", pricePer1000: 22000, description: "Tambah likes pada video TikTok Anda", status: "active" },
+            { id: 7, name: "TikTok Views", platform: "tiktok", type: "views", pricePer1000: 30000, description: "Tingkatkan views video TikTok Anda", status: "active" },
+            { id: 8, name: "TikTok Live Views", platform: "tiktok", type: "live", pricePer1000: 55000, description: "Tambah viewers saat live di TikTok", status: "active" },
+            
+            // YouTube Services
+            { id: 9, name: "YouTube Subscribers", platform: "youtube", type: "followers", pricePer1000: 75000, description: "Tambah subscribers YouTube channel Anda", status: "active" },
+            { id: 10, name: "YouTube Likes", platform: "youtube", type: "likes", pricePer1000: 35000, description: "Tambah likes pada video YouTube Anda", status: "active" },
+            { id: 11, name: "YouTube Views", platform: "youtube", type: "views", pricePer1000: 40000, description: "Tingkatkan views video YouTube Anda", status: "active" },
+            { id: 12, name: "YouTube Live Views", platform: "youtube", type: "live", pricePer1000: 80000, description: "Tambah viewers saat live di YouTube", status: "active" },
+            
+            // Facebook Services
+            { id: 13, name: "Facebook Followers", platform: "facebook", type: "followers", pricePer1000: 40000, description: "Tambah followers Facebook dengan cepat dan aman", status: "active" },
+            { id: 14, name: "Facebook Likes", platform: "facebook", type: "likes", pricePer1000: 18000, description: "Tambah likes pada halaman Facebook Anda", status: "active" },
+            { id: 15, name: "Facebook Views", platform: "facebook", type: "views", pricePer1000: 22000, description: "Tingkatkan views video Facebook Anda", status: "active" },
+            { id: 16, name: "Facebook Live Views", platform: "facebook", type: "live", pricePer1000: 50000, description: "Tambah viewers saat live di Facebook", status: "active" },
+            { id: 17, name: "Facebook Monetisasi Konten (MK)", platform: "facebook", type: "monetization", pricePer1000: 250000, description: "Bantu membuka fitur monetisasi konten di Facebook", status: "active" },
+            
+            // Twitter Services
+            { id: 18, name: "Twitter Followers", platform: "twitter", type: "followers", pricePer1000: 35000, description: "Tambah followers Twitter dengan cepat", status: "active" },
+            { id: 19, name: "Twitter Likes", platform: "twitter", type: "likes", pricePer1000: 15000, description: "Tambah likes pada tweet Twitter Anda", status: "active" },
+            { id: 20, name: "Twitter Retweets", platform: "twitter", type: "shares", pricePer1000: 20000, description: "Tingkatkan retweets pada tweet Anda", status: "active" }
         ];
 
         let sampleTransactions = JSON.parse(localStorage.getItem('followBoostTransactions')) || [
@@ -1187,15 +1540,15 @@
             serviceChart = new Chart(serviceCtx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Instagram', 'TikTok', 'YouTube', 'Twitter', 'Facebook'],
+                    labels: ['Instagram', 'TikTok', 'YouTube', 'Facebook', 'Twitter'],
                     datasets: [{
-                        data: [45, 25, 20, 5, 5],
+                        data: [35, 25, 20, 15, 5],
                         backgroundColor: [
                             '#E1306C',
                             '#000000',
                             '#FF0000',
-                            '#1DA1F2',
-                            '#1877F2'
+                            '#1877F2',
+                            '#1DA1F2'
                         ]
                     }]
                 },
@@ -1570,7 +1923,7 @@
                             </div>
                             <p class="card-text text-muted">${service.description}</p>
                             <div class="mb-2">
-                                <small class="text-muted">Platform: ${service.platform}</small>
+                                <small class="text-muted">Platform: ${service.platform} | Jenis: ${getServiceTypeText(service.type)}</small>
                             </div>
                             <div class="mb-3">
                                 <strong>Rp ${service.pricePer1000.toLocaleString()} / 1000</strong>
@@ -1590,6 +1943,20 @@
             
             // Add event listeners to service action buttons
             attachServiceEventListeners();
+        }
+
+        // Fungsi untuk mendapatkan teks jenis layanan
+        function getServiceTypeText(type) {
+            const typeMap = {
+                'followers': 'Followers',
+                'likes': 'Likes',
+                'views': 'Views',
+                'live': 'Live Views',
+                'comments': 'Comments',
+                'shares': 'Shares',
+                'monetization': 'Monetisasi'
+            };
+            return typeMap[type] || type;
         }
 
         // Attach event listeners for service actions
@@ -1796,6 +2163,7 @@
                     document.getElementById('serviceId').value = service.id;
                     document.getElementById('serviceName').value = service.name;
                     document.getElementById('servicePlatform').value = service.platform;
+                    document.getElementById('serviceType').value = service.type;
                     document.getElementById('servicePrice').value = service.pricePer1000;
                     document.getElementById('serviceDescription').value = service.description;
                     document.getElementById('serviceStatus').checked = service.status === 'active';
@@ -1858,6 +2226,56 @@
                     showNotification('Layanan berhasil dihapus', 'success');
                 }
             }
+        }
+
+        // Fungsi untuk menyimpan layanan (baru atau edit)
+        function saveService() {
+            const serviceId = document.getElementById('serviceId').value;
+            const serviceName = document.getElementById('serviceName').value;
+            const servicePlatform = document.getElementById('servicePlatform').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const servicePrice = parseInt(document.getElementById('servicePrice').value);
+            const serviceDescription = document.getElementById('serviceDescription').value;
+            const serviceStatus = document.getElementById('serviceStatus').checked ? 'active' : 'inactive';
+            
+            if (serviceId) {
+                // Edit mode - update existing service
+                const serviceIndex = sampleServices.findIndex(s => s.id == serviceId);
+                if (serviceIndex !== -1) {
+                    sampleServices[serviceIndex] = {
+                        id: parseInt(serviceId),
+                        name: serviceName,
+                        platform: servicePlatform,
+                        type: serviceType,
+                        pricePer1000: servicePrice,
+                        description: serviceDescription,
+                        status: serviceStatus
+                    };
+                }
+            } else {
+                // Add mode - create new service
+                const newId = sampleServices.length > 0 ? Math.max(...sampleServices.map(s => s.id)) + 1 : 1;
+                sampleServices.push({
+                    id: newId,
+                    name: serviceName,
+                    platform: servicePlatform,
+                    type: serviceType,
+                    pricePer1000: servicePrice,
+                    description: serviceDescription,
+                    status: serviceStatus
+                });
+            }
+            
+            // Save to localStorage
+            saveDataToLocalStorage();
+            
+            // Reload services data
+            loadServicesData();
+            loadPublicServices();
+            
+            // Close modal and show notification
+            bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
+            showNotification(`Layanan ${serviceName} berhasil ${serviceId ? 'diperbarui' : 'ditambahkan'}`, 'success');
         }
 
         // Fungsi untuk menampilkan modal pemesanan
@@ -1944,6 +2362,65 @@
             saveDataToLocalStorage();
             
             showNotification(`Pesanan ${serviceName} berhasil dibuat!`, 'success');
+        }
+
+        // Fungsi untuk memuat layanan di halaman public
+        function loadPublicServices() {
+            const servicesContainer = document.getElementById('servicesContainer');
+            servicesContainer.innerHTML = '';
+            
+            // Group services by platform
+            const servicesByPlatform = {};
+            sampleServices.forEach(service => {
+                if (service.status !== 'active') return;
+                
+                if (!servicesByPlatform[service.platform]) {
+                    servicesByPlatform[service.platform] = [];
+                }
+                servicesByPlatform[service.platform].push(service);
+            });
+            
+            // Create service cards for each platform
+            for (const platform in servicesByPlatform) {
+                const platformServices = servicesByPlatform[platform];
+                
+                platformServices.forEach(service => {
+                    const serviceCard = document.createElement('div');
+                    serviceCard.className = 'col-md-4 mb-4';
+                    
+                    let badge = '';
+                    if (service.id <= 4) { // Mark first 4 services as popular
+                        badge = '<span class="badge bg-success position-absolute top-0 end-0 m-2">Populer</span>';
+                    }
+                    
+                    serviceCard.innerHTML = `
+                        <div class="service-card card h-100 position-relative">
+                            ${badge}
+                            <div class="card-body text-center p-4">
+                                <div class="service-icon ${service.platform}-bg mx-auto">
+                                    <i class="fab fa-${service.platform}"></i>
+                                </div>
+                                <h5 class="card-title">${service.name}</h5>
+                                <p class="card-text text-muted">${service.description}</p>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary btn-order" data-service="${service.name}" data-price="${service.pricePer1000}">Pesan Sekarang</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    servicesContainer.appendChild(serviceCard);
+                });
+            }
+            
+            // Add event listeners to order buttons
+            document.querySelectorAll('.btn-order').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const serviceName = this.getAttribute('data-service');
+                    const pricePer1000 = parseInt(this.getAttribute('data-price'));
+                    showOrderModal(serviceName, pricePer1000);
+                });
+            });
         }
 
         // Fungsi utilitas
@@ -2079,7 +2556,10 @@
                 document.getElementById('publicWebsite').style.display = 'block';
             }
             
-            // Setup tombol pemesanan
+            // Muat layanan di halaman public
+            loadPublicServices();
+            
+            // Setup tombol pemesanan untuk paket harga
             document.querySelectorAll('.btn-order').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const serviceName = this.getAttribute('data-service');
@@ -2115,19 +2595,8 @@
                 editService();
             });
             
-            document.getElementById('saveUserBtn').addEventListener('click', function() {
-                // Simple save functionality
-                const userName = document.getElementById('userName').value;
-                showNotification(`Pengguna ${userName} berhasil disimpan`, 'success');
-                bootstrap.Modal.getInstance(document.getElementById('userModal')).hide();
-            });
-            
-            document.getElementById('saveServiceBtn').addEventListener('click', function() {
-                // Simple save functionality
-                const serviceName = document.getElementById('serviceName').value;
-                showNotification(`Layanan ${serviceName} berhasil disimpan`, 'success');
-                bootstrap.Modal.getInstance(document.getElementById('serviceModal')).hide();
-            });
+            // Perbaikan: Ganti event listener untuk saveServiceBtn
+            document.getElementById('saveServiceBtn').addEventListener('click', saveService);
             
             document.getElementById('refreshOrdersBtn').addEventListener('click', function() {
                 loadOrdersData();
